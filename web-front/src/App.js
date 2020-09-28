@@ -14,10 +14,6 @@ import {connect} from 'react-redux'
 function App(props) {
 
   let location = useLocation();
-  
-  console.log("User is connected ? : ",props.user.isConnected)
-  console.log("##1",props.user.isConnected)
-  console.log("##2",!props.user.isConnected && location.pathname === "/callback")
 
   let isAuthicated = props.user.isConnected || (!props.user.isConnected && location.pathname === "/callback")
 

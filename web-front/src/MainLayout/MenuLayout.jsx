@@ -16,7 +16,7 @@ export default function MenuLayout(){
             </NavLink>
           </li>
           <li className="nav-item ">
-            <NavLink className="nav-link" to="/commercial/tickets" exact>
+            <NavLink className="nav-link" to="/commercial/ticket/liste" exact>
               <i className="material-icons">description</i>
               <p>Tickets</p>
             </NavLink>

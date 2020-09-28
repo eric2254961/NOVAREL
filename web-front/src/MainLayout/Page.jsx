@@ -14,7 +14,7 @@ function PageLayout(){
         <Route exact path="/">
           <Dashboard/>
         </Route>
-        <Route path="/commercial/tickets">
+        <Route path="/commercial/ticket">
           <TicketPage />
         </Route>
         <Route path="/viabilite">
