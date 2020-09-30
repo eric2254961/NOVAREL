@@ -35,13 +35,12 @@ axios.interceptors.response.use(
 
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      let refreshToken = token;
       return axios.post('/auth/token', {
-        "token": refreshToken
+        "token": token
       })
       .then(res => {
-        if (res.status === 201) {
-          let responseToken = res.data
+        if (res.status === 201 || res.status === 200) {
+          let responseToken = res.data.token
           localStorage.setItem("NVL_TK", responseToken);
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + responseToken;
           return axios(originalRequest);

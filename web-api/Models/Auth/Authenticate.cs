@@ -2,6 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using web_api.Models.Dto;
 
@@ -23,9 +24,9 @@ namespace web_api.Models.Auth
 
         String secretKey;
 
-        public Authenticate(string JwtKey)
+        public Authenticate()
         {
-            this.secretKey = JwtKey;
+            this.secretKey = Startup.Configuration["Jwt:SecretKey"];
             //_context = new NovarelContext();
         }
 
@@ -54,7 +55,7 @@ namespace web_api.Models.Auth
                 issuer: issuer,
                 audience: audience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddHours(4),
                 signingCredentials: credentials
             );
 

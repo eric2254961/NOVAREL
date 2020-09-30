@@ -5,6 +5,27 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "web-api", "web-api\web-api.csproj", "{58C71DC1-2AA9-45D9-BFF2-97E622765FC8}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "web-front", "web-front\", "{681DF60A-D08A-4BF1-BF57-F568655F8B40}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_56375"
+		Debug.AspNetCompiler.PhysicalPath = "web-front\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56375\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_56375"
+		Release.AspNetCompiler.PhysicalPath = "web-front\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56375\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "56375"
+		SlnRelativePath = "web-front\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +36,10 @@ Global
 		{58C71DC1-2AA9-45D9-BFF2-97E622765FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58C71DC1-2AA9-45D9-BFF2-97E622765FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58C71DC1-2AA9-45D9-BFF2-97E622765FC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{681DF60A-D08A-4BF1-BF57-F568655F8B40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{681DF60A-D08A-4BF1-BF57-F568655F8B40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{681DF60A-D08A-4BF1-BF57-F568655F8B40}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{681DF60A-D08A-4BF1-BF57-F568655F8B40}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

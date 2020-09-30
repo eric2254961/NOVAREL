@@ -32,6 +32,16 @@ namespace web_api.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        [Route("api/auth/token")]
+        public JsonResult RefreshToken([FromBody] Object item)
+        {
+            var authenticate = new Authenticate();
+            var user = new Utilisateur();
+
+            return Json(new RefreshToken{ token = GenerateToken(authenticate, authenticate.AuthenticateUser(user)) });
+        }
         
         [AllowAnonymous]
         [HttpPost]
@@ -39,17 +49,14 @@ namespace web_api.Controllers
         public IActionResult Auth()
         {
             Utilisateur credential = new Utilisateur();
-            string secret = _config["Jwt:SecretKey"];
-            Authenticate authenticate = new Authenticate(secret);
+            Authenticate authenticate = new Authenticate();
 
             IActionResult response = Unauthorized();
             Utilisateur user = authenticate.AuthenticateUser(credential);
 
             if (user != null)
             {
-                string issuer = _config["Jwt:Issuer"];
-                string audience = _config["Jwt:Audience"];
-                var tokenString = authenticate.GenerateJWTToken(user, issuer, audience);
+                var tokenString = GenerateToken(authenticate, user);
 
                 response = Redirect(_config["webFront:successUrl"] + "token=" + tokenString + "&user=" + JsonConvert.SerializeObject(user));
             }
@@ -57,7 +64,17 @@ namespace web_api.Controllers
             return response;
         }
 
+        private String GenerateToken(Authenticate authenticate, Utilisateur utilisateur)
+        {
+            string issuer = _config["Jwt:Issuer"];
+            string audience = _config["Jwt:Audience"];
+            return authenticate.GenerateJWTToken(utilisateur, issuer, audience);
+        }
+
     }
+}
 
-
+class RefreshToken
+{
+    public String token { get; set; }
 }

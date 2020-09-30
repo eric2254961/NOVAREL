@@ -44,7 +44,7 @@ function NewTicket(props){
 }
 
 export default reduxForm({
-    form: 'newticket' // a unique identifier for this form
+    form: 'newticket'
 })(NewTicket)
 
 
