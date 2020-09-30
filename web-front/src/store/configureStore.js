@@ -1,5 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
+import { reducer as reduxFormReducer } from 'redux-form';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import rootReducers from './index';
 
@@ -11,7 +12,8 @@ export default function configureStore(history, initialState = {}) {
 
     const rootReducer = combineReducers({
         ...rootReducers,
-        router: connectRouter(history)
+        router: connectRouter(history),
+        form: reduxFormReducer
     });
 
     const enhancers = [];

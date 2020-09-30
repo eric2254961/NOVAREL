@@ -8,7 +8,7 @@ import {
 import PropsType from 'prop-types'
 import Authenticator from './Auth/'
 import MainLayout from './MainLayout'
-import ExternalRedirect from './Auth/ExternalRedirect'
+import AuthRedirect from './Auth/AuthRedirect'
 import {connect} from 'react-redux'
 
 function App(props) {
@@ -16,6 +16,11 @@ function App(props) {
   let location = useLocation();
 
   let isAuthicated = props.user.isConnected || (!props.user.isConnected && location.pathname === "/callback")
+
+  if(!isAuthicated){
+    //TODO : Authentifier le token s'il existe
+    isAuthicated = true;
+  }
 
   return (
     <div className="App">
@@ -31,7 +36,7 @@ function App(props) {
         </Switch>
       </Router>}
 
-      {!isAuthicated && <ExternalRedirect to={props.loginUrl} />}
+      {!isAuthicated && <AuthRedirect to={props.loginUrl} />}
     </div>
   );
 }

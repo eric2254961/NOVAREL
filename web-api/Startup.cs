@@ -56,6 +56,10 @@ namespace web_api
 
             services.AddControllersWithViews();
 
+            services.AddCors(c => {
+                c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin());
+            });
+
             services.AddAuthorization(config =>
             {
                 config.AddPolicy(Policies.Admin, Policies.AdminPolicy());
@@ -70,6 +74,13 @@ namespace web_api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+            );
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
