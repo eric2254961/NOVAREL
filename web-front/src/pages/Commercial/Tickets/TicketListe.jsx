@@ -10,7 +10,7 @@ function TicketListe(props){
                 <Link to="/commercial/ticket/nouveau">Nouveau</Link>
             </p>
             <div className="col-md-12">
-            <div className="card">
+                <div className="card">
                 <div className="card-header card-header-primary">
                     <h4 className="card-title ">Simple Table</h4>
                     <p className="card-category"> Here is a subtitle for this table</p>
@@ -61,7 +61,7 @@ function TicketListe(props){
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
         </React.Fragment>
     )
 }

@@ -1,7 +1,6 @@
 const NOTIFICATION_SHOW = "NOTIFICATION_SHOW";
 const NOTIFICATION_HIDE = "NOTIFICATION_HIDE";
 
-
 export function showNotification(typeNotification, message){
   return (dispatch) => {
     dispatch({
@@ -46,7 +45,7 @@ export const reducer = (state = initialState, action) => {
           message: null
         }
     default :
-      return state
+      return {...state}
   }
 }
 

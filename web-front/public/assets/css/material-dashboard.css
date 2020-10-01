@@ -13225,6 +13225,7 @@ fieldset[disabled][disabled] .has-rose .form-control,
 
 .bmd-form-group {
   position: relative;
+  width: 100%;
 }
 
 .bmd-form-group:not(.has-success):not(.has-danger) [class^='bmd-label'].bmd-label-floating,

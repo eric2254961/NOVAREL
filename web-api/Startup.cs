@@ -64,6 +64,7 @@ namespace web_api
             {
                 config.AddPolicy(Policies.Admin, Policies.AdminPolicy());
                 config.AddPolicy(Policies.User, Policies.UserPolicy());
+                config.AddPolicy(Policies.Commercial, Policies.CommercialPolicy());
             });
         }
 

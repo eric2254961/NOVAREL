@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import Search from "../components/Search";
 
 export default function TopLayout(){
   return (
@@ -7,22 +8,11 @@ export default function TopLayout(){
     <nav className="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
       <div className="container-fluid">
         <div className="navbar-wrapper">
-          <Link className="navbar-brand" to="#">Dashboard</Link>
+          <Link className="navbar-brand" to="/">Dashboard</Link>
         </div>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="sr-only">Toggle navigation</span>
-          <span className="navbar-toggler-icon icon-bar"></span>
-          <span className="navbar-toggler-icon icon-bar"></span>
-          <span className="navbar-toggler-icon icon-bar"></span>
-        </button>
+        <Search />
         <div className="collapse navbar-collapse justify-content-end">        
           <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link className="nav-link" to="#">
-                <i className="material-icons">dashboard</i>
-                <p className="d-lg-none d-md-block"> Stats </p>
-              </Link>
-            </li>
             <li className="nav-item dropdown">
               <Link className="nav-link" to="#" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i className="material-icons">person</i>

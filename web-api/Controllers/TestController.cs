@@ -12,7 +12,6 @@ namespace web_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[EnableCors("AllowOrigin")]
     public class TestController : ControllerBase
     {
         [HttpGet]

@@ -10,13 +10,18 @@ namespace web_api.Models.Auth
     {
         public const string Admin = "Admin";
         public const string User = "User";
+        public const string Commercial = "Commercial";
         public static AuthorizationPolicy AdminPolicy()
         {
-            return new AuthorizationPolicyBuilder().RequireAuthenticatedUser().RequireRole(Admin).Build();
+            return RolePolicyFactory(Admin);
+        }
+        public static AuthorizationPolicy CommercialPolicy()
+        {
+            return RolePolicyFactory(Commercial);
         }
         public static AuthorizationPolicy UserPolicy()
         {
-            return new AuthorizationPolicyBuilder().RequireAuthenticatedUser().RequireRole(User).Build();
+            return RolePolicyFactory(User);
         }
 
         public static AuthorizationPolicy RolePolicyFactory(String service)

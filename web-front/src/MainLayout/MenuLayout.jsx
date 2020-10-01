@@ -1,6 +1,7 @@
 import React from 'react'
 import {NavLink} from "react-router-dom";
 
+//Les icones = > https://material.io/resources/icons/?style=baseline
 export default function MenuLayout(){
   return (<React.Fragment>
     <div className="sidebar" data-color="green" data-background-color="white">
@@ -25,6 +26,12 @@ export default function MenuLayout(){
             <NavLink className="nav-link" to="/viabilite">
               <i className="material-icons">new_releases</i>
               <p>Accidents</p>
+            </NavLink>
+          </li>
+          <li className="nav-item ">
+            <NavLink className="nav-link" to="/test/componnent">
+              <i className="material-icons">bug_report</i>
+              <p>Test composants</p>
             </NavLink>
           </li>
           

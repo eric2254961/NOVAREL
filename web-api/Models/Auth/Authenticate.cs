@@ -19,7 +19,7 @@ namespace web_api.Models.Auth
             Password = "azerty",
             Status = "100",
             RemenberToken = "jhdsgdhhghfjgdfdfjhfgfhfgf",
-            Service = new Service { Id = 1, Libelle = "Admin" }
+            Service = new Service { Id = 1, Libelle = "Commercial" }
         };
 
         String secretKey;
