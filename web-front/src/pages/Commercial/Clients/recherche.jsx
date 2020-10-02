@@ -29,7 +29,7 @@ function RechercheClient(props){
                                         <td>{item.TYPE === "1" ? "Entreprise" : "Particulier"}</td>
                                         <td>{item.PHONE_1} / {item.PHONE_2}</td>
                                         <td className="text-primary">
-                                            <Link to="" title="Fiche client">
+                                            <Link to={`/commercial/ticket/nouveau/${item.IDENTITY}`} title="Fiche client">
                                                 <i className="material-icons">preview</i>
                                             </Link>
                                             <Link to="" title="Ouvrir une réclamation">

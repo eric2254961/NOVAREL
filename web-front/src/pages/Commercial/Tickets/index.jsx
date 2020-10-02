@@ -19,7 +19,7 @@ function TicketPage(props){
     return (
         <React.Fragment>
             <Switch>
-                <Route path="/commercial/ticket/nouveau" exact>
+                <Route path="/commercial/ticket/nouveau/:clientId" exact>
                     <NewTicket onSubmit={action}/>
                 </Route>
                 <Route path="/commercial/ticket/liste" exact >
