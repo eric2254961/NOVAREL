@@ -18,37 +18,210 @@ namespace web_api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("web_api.Models.Dto.Utilisateur", b =>
+            modelBuilder.Entity("web_api.Models.Dto.Commercial.ModeOuverture", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
+                    b.Property<string>("Libelle")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("City")
+                    b.HasKey("Id");
+
+                    b.ToTable("ModeOuvertures");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Libelle = "Email"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Libelle = "Téléphone"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Libelle = "Présentiel"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Libelle = "Autres"
+                        });
+                });
+
+            modelBuilder.Entity("web_api.Models.Dto.Objet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Libelle")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Module")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Objets");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Libelle = "Problèmes liés à la classification",
+                            Module = "COMM"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Libelle = "Etat du réseau",
+                            Module = "COMM"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Libelle = "Sécurité",
+                            Module = "COMM"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Libelle = "Problèmes liés au dépannage",
+                            Module = "COMM"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Libelle = "Problèmes liés au badges",
+                            Module = "COMM"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Libelle = "Problèmes liés au personnel",
+                            Module = "COMM"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Libelle = "Problèmes liés aux opérateurs mobile",
+                            Module = "COMM"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Libelle = "Autres objets",
+                            Module = "COMM"
+                        });
+                });
+
+            modelBuilder.Entity("web_api.Models.Dto.Organisation.Service", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Libelle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Services");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Libelle = "Commercial"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Libelle = "Viabilite"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Libelle = "Informatique"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Libelle = "Direction"
+                        });
+                });
+
+            modelBuilder.Entity("web_api.Models.Dto.Organisation.Utilisateur", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostalCode")
+                    b.Property<string>("RemenberToken")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("State")
+                    b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Utilisateurs");
+                });
+
+            modelBuilder.Entity("web_api.Models.Dto.Pont.Emplacement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Libelle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emplacements");
+                });
+
+            modelBuilder.Entity("web_api.Models.Dto.Pont.Localisation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Libelle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Localisations");
                 });
 #pragma warning restore 612, 618
         }

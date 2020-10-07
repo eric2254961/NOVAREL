@@ -1,7 +1,8 @@
 import axios from "../enabler/Axios"
 import {showNotification, NotificationType} from "./Notification";
 
-const CLIENT_LOAD = "CLIENT_LOAD"
+const CLIENT_SEARCH = "CLIENT_SEARCH"
+const CLIENT_DETAILS = "CLIENT_DETAILS"
 
 export function searchClient(subject){
     return dispatch => {
@@ -9,7 +10,7 @@ export function searchClient(subject){
             .then((response) => {
                 console.log(response)
                 dispatch({
-                    type: CLIENT_LOAD,
+                    type: CLIENT_SEARCH,
                     payload: response.data
                 })
             })
@@ -19,14 +20,36 @@ export function searchClient(subject){
             })
     }
 }
+export function getClientDetails(id){
+    return dispatch => {
+        axios.get(`/commercial/clients/ClientGeaDetails/${id}`)
+            .then((response) => {
+                console.log(response)
+                dispatch({
+                    type: CLIENT_DETAILS,
+                    payload: response.data
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+                showNotification(NotificationType.ERROR, "Une erreur s'est produite. Impossible de charger les détails du client.")
+            })
+    }
+}
 
 
 const initialState = { liste : [] };
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case CLIENT_LOAD :
+        case CLIENT_SEARCH :
             return {
+                ...state,
                 liste: action.payload
+            }
+        case CLIENT_DETAILS :
+            return {
+                ...state,
+                selected: action.payload
             }
         default :
             return {...state}
@@ -35,7 +58,8 @@ export const reducer = (state = initialState, action) => {
 
 const ClientRx = {
     reducer : reducer,
-    search : searchClient
+    search : searchClient,
+    details: getClientDetails
 }
 
 export default ClientRx;

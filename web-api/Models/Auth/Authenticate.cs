@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using web_api.Models.Dto;
+using web_api.Models.Dto.Organisation;
 
 namespace web_api.Models.Auth
 {

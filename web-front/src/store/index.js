@@ -1,11 +1,13 @@
-import * as Counter from '../reducer/Counter';
-import * as User from '../reducer/Auth'
-import * as NotificationRx from '../reducer/Notification'
-import * as ClientRx from "../reducer/Clients";
+import Counter from '../reducer/Counter';
+import User from '../reducer/Auth'
+import NotificationRx from '../reducer/Notification'
+import ClientRx from "../reducer/Clients";
+import TicketRx from "../reducer/Ticket";
 
 let rootReducers = {
     user: User.reducer,
     clients: ClientRx.reducer,
+    tickets: TicketRx.reducer,
     notification: NotificationRx.reducer,
     counter: Counter.reducer,
 }

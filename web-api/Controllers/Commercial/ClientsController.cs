@@ -21,5 +21,12 @@ namespace web_api.Controllers.Commercial
         {
             return Content(ClientGeaService.GetFakeGeaClient(), MediaTypeHeaderValue.Parse("application/json"));
         }
+
+        [HttpGet("{IdClient}")]
+        [Authorize(Policy = Policies.Commercial)]
+        public ContentResult ClientGeaDetails(String IdClient)
+        {
+            return Content(ClientGeaService.GetFakeGeaClientDetails(IdClient), MediaTypeHeaderValue.Parse("application/json"));
+        }
     }
 }

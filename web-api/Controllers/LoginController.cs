@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using web_api.Models.Auth;
 using web_api.Models.Dto;
+using web_api.Models.Dto.Organisation;
 
 //Je me suis inspiré de ça avec les JWT
 //https://medium.com/@vaibhavrb999/jwt-authentication-authorization-in-net-core-3-1-e762a7abe00a

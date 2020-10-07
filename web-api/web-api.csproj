@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Commercial\Dto\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Models\Dto\Viabilite\" />
   </ItemGroup>
 
   <ItemGroup>

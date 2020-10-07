@@ -76,5 +76,49 @@ namespace web_api.Services
     }
   ]";
         }
+
+        public static String GetFakeGeaClientDetails(string IdClientGea)
+        {
+            return @"{
+  ""IDENTITY"": ""000000041015"",
+  ""LAST_MODIF"": ""20160401165559"",
+  ""STATUS"": ""1"",
+  ""TYPE"": ""2"",
+  ""NAME"": ""KOFFI BERENGER WILFRIED"",
+  ""FNAME"": "" "",
+  ""CNAME"": "" "",
+  ""ADDR_L1"": ""ABIDJAN"",
+  ""ADDR_L2"": "" "",
+  ""ADDR_L3"": "" "",
+  ""POSTCODE"": ""ABIDJAN"",
+  ""TOWN"": ""ABIDJAN"",
+  ""COUNTRY"": "" "",
+  ""ID_CARD_TYPE"": ""1"",
+  ""ID_CARD_NUMBER"": ""C 0088 6269 54"",
+  ""PHONE_1"": ""47631443"",
+  ""PHONE_2"": "" "",
+  ""FAX"": "" "",
+  ""EMAIL"": ""glamolondon@gmail.com"",
+  ""COMMENT"": ""FAI"",
+  ""SUBSCRIPTIONS"": {
+                ""PRODUCT"": ""280002"",
+    ""IDENTITY"": ""000000041015"",
+    ""SUBS_ID"": ""110400060122"",
+    ""STATUS"": ""1"",
+    ""SOLDE"": 0,
+    ""LM_DHMS"": ""0"",
+    ""LR_DHMS"": ""20190526171516"",
+    ""TAGS"": {
+                    ""IDENTITY"": ""000000041015"",
+      ""SUBS_ID"": ""110400060122"",
+      ""TAG_ID"": ""70053706"",
+      ""STATUS"": ""1"",
+      ""TAG_TYPE"": ""9"",
+      ""CAUTION"": 0,
+      ""LM_DHMS"": ""0""
+    }
+            }
+        }";
+        }
     }
 }
