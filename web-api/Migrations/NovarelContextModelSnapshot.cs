@@ -203,12 +203,61 @@ namespace web_api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ZoneId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("ZoneId");
+
                     b.ToTable("Emplacements");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Libelle = "OA6 Bis",
+                            ZoneId = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Libelle = "C 0",
+                            ZoneId = 3
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Libelle = "OA 2",
+                            ZoneId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Libelle = "NT01",
+                            ZoneId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Libelle = "NT02",
+                            ZoneId = 4
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Libelle = "NX03",
+                            ZoneId = 4
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Libelle = "SM09",
+                            ZoneId = 4
+                        });
                 });
 
-            modelBuilder.Entity("web_api.Models.Dto.Pont.Localisation", b =>
+            modelBuilder.Entity("web_api.Models.Dto.Pont.Zone", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -221,7 +270,38 @@ namespace web_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Localisations");
+                    b.ToTable("Zones");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Libelle = "Section courante Nord"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Libelle = "Section courante Sud"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Libelle = "Viaduc (Pont)"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Libelle = "Aire de péage"
+                        });
+                });
+
+            modelBuilder.Entity("web_api.Models.Dto.Pont.Emplacement", b =>
+                {
+                    b.HasOne("web_api.Models.Dto.Pont.Zone", "Zone")
+                        .WithMany()
+                        .HasForeignKey("ZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

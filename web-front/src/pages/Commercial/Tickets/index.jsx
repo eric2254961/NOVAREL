@@ -31,7 +31,7 @@ function TicketPage(props){
             <Switch>
                 <Route path="/commercial/ticket/nouveau/:clientId" exact>
                     <div className="col-md-8">
-                        <NewTicket onSubmit={action} data={props.enabler}/>
+                        <NewTicket onSubmit={action} data={props.context}/>
                     </div>
                     <div className="col-md-4">
                         <DetailsMiniCLient client={props.client} />
@@ -49,7 +49,7 @@ function TicketPage(props){
 const mapStateToProps = store =>  {
     return {
         client: store.clients.selected,
-        enabler: store.tickets.enabler
+        context: store.tickets.context
     }
 }
 

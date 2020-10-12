@@ -16,7 +16,7 @@ namespace web_api.Models.Dto.Organisation
         public string Password { get; set; }
         public string RemenberToken { get; set; }
         public string Status { get; set; }
-
+        [Required]
         public Service Service;
     }
 }

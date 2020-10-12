@@ -13,6 +13,6 @@ namespace web_api.Models.Dto.Pont
         [Required]
         public String Libelle { get; set; }
         [Required]
-        Localisation Localisation { get; set; }
+        public Zone Zone { get; set; }
     }
 }

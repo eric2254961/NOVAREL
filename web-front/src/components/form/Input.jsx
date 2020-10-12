@@ -1,12 +1,12 @@
 import React from "react";
+import TextField from '@material-ui/core/TextField';
 
 function InputField(props){
     const {input, label, type, meta: {touched, error}} = props
 
     return(
         <div className="form-group bmd-form-group">
-            <label className="bmd-label-floating">{label}</label>
-            <input className="form-control" {...input} type={type}/>
+            <TextField label={label} {...input} />
         </div>
     )
 }

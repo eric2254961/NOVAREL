@@ -22,13 +22,13 @@ export function getDataForNew(){
     }
 }
 
-const initialState = { enabler: {openMode : [], subject: []}, liste: [] };
+const initialState = { context: {openMode : [], subject: []}, liste: [], localisation: {zones : [], emplacements: []} };
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case TICKET_NEW :
             return {
                 ...state,
-                enabler: action.payload
+                context: action.payload
             }
         default :
             return {...state}
