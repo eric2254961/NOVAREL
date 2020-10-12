@@ -84,7 +84,7 @@ namespace web_api.Services
   ""LAST_MODIF"": ""20160401165559"",
   ""STATUS"": ""1"",
   ""TYPE"": ""2"",
-  ""NAME"": ""KOFFI BERENGER WILFRIED"",
+  ""NAME"": ""KOUAKOU JEAN MARC"",
   ""FNAME"": "" "",
   ""CNAME"": "" "",
   ""ADDR_L1"": ""ABIDJAN"",
@@ -98,7 +98,7 @@ namespace web_api.Services
   ""PHONE_1"": ""47631443"",
   ""PHONE_2"": "" "",
   ""FAX"": "" "",
-  ""EMAIL"": ""glamolondon@gmail.com"",
+  ""EMAIL"": ""kjeanmarc@gmail.com"",
   ""COMMENT"": ""FAI"",
   ""SUBSCRIPTIONS"": {
                 ""PRODUCT"": ""280002"",
