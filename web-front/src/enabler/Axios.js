@@ -1,11 +1,16 @@
 import axios from "axios";
+import LoadingBarRx from "../reducer/Loading";
+import { useDispatch } from 'react-redux'
 
 const token = localStorage.getItem("NVL_TK");
+//const dispatch = useDispatch()
 
 // Add a request interceptor
 axios.interceptors.request.use(
   config => {
     console.log("sarting web request")
+    //dispatch({ type: LoadingBarRx.EventShow })
+
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token;
     }
@@ -22,10 +27,13 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (response) => {
     console.log("request success   response")
-      return response
+    //dispatch({ type: LoadingBarRx.EventHide })
+    return response
   },
   (error) => {
     console.log("request error response")
+    //dispatch({ type: LoadingBarRx.EventHide })
+
     const originalRequest = error.config;
 
     if (error.response.status === 401 && originalRequest.url === "https://localhost:44328/auth/token") {

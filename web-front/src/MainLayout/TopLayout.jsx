@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import Search from "../components/Search";
+import LoadingBar from "../components/Loading";
 
 export default function TopLayout(){
   return (
@@ -21,7 +22,7 @@ export default function TopLayout(){
               <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                 <Link className="dropdown-item" to="#">Profile</Link>
                 <Link className="dropdown-item" to="#">Settings</Link>
-                <div className="dropdown-divider"></div>
+                <div className="dropdown-divider" />
                 <Link className="dropdown-item" to="#">Log out</Link>
               </div>
             </li>
@@ -29,6 +30,7 @@ export default function TopLayout(){
         </div>
       </div>
     </nav>
+    <LoadingBar />
   </React.Fragment>
   )
 }

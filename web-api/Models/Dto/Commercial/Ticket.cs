@@ -8,6 +8,7 @@ namespace web_api.Models.Dto.Commercial
 {
     public class Ticket
     {
+        [Key]
         public int Id { get; set; }
         [Required]
         [MaxLength(12)]
@@ -18,8 +19,8 @@ namespace web_api.Models.Dto.Commercial
         [Required]
         public ModeOuverture ModeOuverture { get; set; }
 
-        public List<Objet> objets { get; set; }
+        public List<Objet> Objets { get; set; }
 
-        public DateTime DateFaits { get; set; }
+        public DateTime DateFait { get; set; }
     }
 }

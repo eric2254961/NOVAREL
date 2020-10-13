@@ -6,19 +6,17 @@ function SelectField(props){
     const {input, label, meta: {touched, error}, data} = props
 
     return(
-        <div className={`form-group`}>
-            <TextField
-                select
-                label={label}
-                size="small"
-                fullWidth
-                {...input}
-            >
-                {data.map((item,k) => {
-                    return <MenuItem key={k} value={item.Id}>{item.Libelle}</MenuItem>
-                })}
-            </TextField>
-        </div>
+        <TextField
+            select
+            label={label}
+            size="small"
+            fullWidth
+            {...input}
+        >
+            {data.map((item,k) => {
+                return <MenuItem key={k} value={item.Id}>{item.Libelle}</MenuItem>
+            })}
+        </TextField>
     )
 }
 SelectField.propTypes = {

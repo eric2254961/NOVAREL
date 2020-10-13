@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {reduxForm, Field, Fields} from 'redux-form'
 import InputField from "../../../components/form/Input";
 import SelectField from "../../../components/form/Select";
@@ -9,10 +9,12 @@ import Sens from "../../../components/Sens"
 import LocalisationInfos from "../../../components/LocalisationInfos";
 import VehiculeInfos from "../../../components/VehiculeInfos";
 import MultilineField from "../../../components/form/Multiline";
+import TypeTicketComponent from "../../../components/TypeTicket";
+import {DateTimePicker} from "@material-ui/pickers";
 
 function NewTicket(props){
 
-    const { handleSubmit, pristine, reset, submitting, data } = props
+    const { handleSubmit, pristine, reset, submitting, data: { Localisations } } = props
 
     return (
         <div className="card">
@@ -23,33 +25,30 @@ function NewTicket(props){
                 <form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col-md-4">
-                            <Field component={DateTime} name="datetime" label="Date et heure des faits" showTime={true}/>
+                            <Field
+                                normalize = {(value, previousValue, allValues, previousAllValues) => { return (value)}}
+                                component={DateTime} name="datetime" label="Date et heure des faits" showTime={true}/>
                         </div>
                         <div className="col-md-4">
-                            <Field name="openMode" label="Mode d'ouverture" component={SelectField} data={data.openMode}/>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-4">
-                            <Field name="firstName" label="First Name" component={InputField} type="text"/>
+                            <Field name="openMode" label="Mode d'ouverture" component={SelectField} data={props.data.OpenModes}/>
                         </div>
                         <div className="col-md-4">
-                            <Field name="lastName" label="Last name" component={InputField} type="text"/>
+                            <Field name="typeticket" label="Type de ticket" component={TypeTicketComponent} />
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-12">
                             <hr/>
-                            <SubjectChoice data={data.subject} />
+                            <SubjectChoice data={props.data.Subjects} />
                         </div>
                     </div>
                     <hr/>
                     <h4>Localisation</h4>
                     <div className="row">
                         <div className="col-md-4">
-                            <Field component={Sens} name="sens" />
+                            <Field component={Sens} name="sens" label="Sens" />
                         </div>
-                        <Fields names={['zone', 'emplacement',]} component={LocalisationInfos}/>
+                        <Fields names={['zone', 'emplacement',]} component={LocalisationInfos} data={Localisations}/>
                     </div>
 
                     <hr/>
@@ -62,7 +61,7 @@ function NewTicket(props){
                     <h4>Description</h4>
                     <div className="row">
                         <div className="col-md-12">
-                            <Field component={MultilineField} name="description" />
+                            <Field component={MultilineField} name="description" placeholder="Saisir la description du ticket SVP" />
                         </div>
                     </div>
 
@@ -80,16 +79,16 @@ function NewTicket(props){
 NewTicket.propTypes = {
     data: PropTypes.shape(
         {
-            subject: PropTypes.array,
-            openMode: PropTypes.array,
+            Subjects: PropTypes.array,
+            OpenModes: PropTypes.array,
         }
     ).isRequired
 }
 
 NewTicket.defaultProps = {
     data: {
-        subject: [],
-        openMode: []
+        Subjects: [],
+        OpenModes: []
     }
 }
 

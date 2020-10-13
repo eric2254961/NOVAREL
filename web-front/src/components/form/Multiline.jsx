@@ -2,7 +2,7 @@ import React from "react";
 import TextField from '@material-ui/core/TextField';
 
 function MultilineField(props){
-    const {input, label, type, meta: {touched, error}} = props
+    const {input, label, type, meta: {touched, error}, placeholder} = props
 
     return(
         <div className="form-group bmd-form-group">
@@ -12,6 +12,7 @@ function MultilineField(props){
                multiline
                rows={5}
                fullWidth
+               placeholder={placeholder}
             />
         </div>
     )

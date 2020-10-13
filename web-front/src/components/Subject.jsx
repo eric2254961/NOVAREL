@@ -10,7 +10,7 @@ function SubjectChoice(props){
             <h4>Objets</h4>
             <div>
                 {data.map((item, k) => {
-                    return <label className="radio-inline col-md-6 col-lg-6" key={k}>
+                    return <label className="radio-inline" key={k}>
                         <Field name={`subject${item.Id}`} size="small" component={CheckboxField} type="checkbox" value={item.Id} /> {item.Libelle}
                     </label>
                 })}
