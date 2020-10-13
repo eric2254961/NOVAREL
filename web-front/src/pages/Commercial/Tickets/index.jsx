@@ -7,7 +7,7 @@ import DetailsMiniCLient from "../Clients/details.mini";
 import ClientRx from "../../../reducer/Clients";
 import {connect} from 'react-redux'
 import TicketRx from "../../../reducer/Ticket";
-
+import TraiterTicket from "./traiter";
 
 function TicketPage(props){
     useEffect(() => {
@@ -39,6 +39,9 @@ function TicketPage(props){
                 </Route>
                 <Route path="/commercial/ticket/liste" exact >
                     <TicketListe />
+                </Route>
+                <Route path="/commercial/ticket/:Reference/traiter" exact >
+                    <TraiterTicket />
                 </Route>
             </Switch>
         </React.Fragment>

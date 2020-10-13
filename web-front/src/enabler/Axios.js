@@ -16,7 +16,7 @@ axios.interceptors.request.use(
     }
     config.headers['Content-Type'] = 'application/json';
     config.headers['Access-Control-Allow-Origin'] = '*';
-    config.baseURL = "https://localhost:44328/api"
+    config.baseURL = "https://localhost:5001/api"
     return config;
   },
   error => {
