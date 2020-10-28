@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json;
 using web_api.Models.Auth;
 using web_api.Services;
 
@@ -17,16 +18,26 @@ namespace web_api.Controllers.Commercial
     {
         [HttpGet]
         [Authorize(Policy = Policies.Commercial)]
-        public ContentResult SearchGeaClient([FromQuery]String subject)
+        public async Task<ContentResult> SearchGeaClient([FromQuery]String subject)
         {
-            return Content(ClientGeaService.GetFakeGeaClient(), MediaTypeHeaderValue.Parse("application/json"));
+            var clientService = new ClientGeaService();
+            var data = await clientService.SearchClientByName(subject);
+            string json = JsonConvert.SerializeObject(data.PAYLOAD);
+            return Content(json, MediaTypeHeaderValue.Parse("application/json"));
         }
 
         [HttpGet("{IdClient}")]
         [Authorize(Policy = Policies.Commercial)]
-        public ContentResult ClientGeaDetails(String IdClient)
+        public async Task<ContentResult> ClientGeaDetails(String IdClient)
         {
-            return Content(ClientGeaService.GetFakeGeaClientDetails(IdClient), MediaTypeHeaderValue.Parse("application/json"));
+            var clientService = new ClientGeaService();
+            var subscriptions = await clientService.GetSubscriptionAndTagCustomer(IdClient);
+            var customer      = await clientService.GetCustomerByIdentity(IdClient);
+
+            customer.PAYLOAD.SUBSCRIPTIONS = subscriptions.PAYLOAD;
+            string json = JsonConvert.SerializeObject(customer.PAYLOAD);
+
+            return Content(json, MediaTypeHeaderValue.Parse("application/json"));
         }
     }
 }

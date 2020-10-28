@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,13 +15,13 @@ namespace web_api.Services
         {
         }
 
-        public List<ModeOuverture> getAllModeOuvertureTicket()
+        public async Task<List<ModeOuverture>> getAllModeOuvertureTicket()
         {
-            return this._context.ModeOuvertures.ToList();
+            return await this._context.ModeOuvertures.ToListAsync();
         }
-        public List<Objet> getAllSubjectsTicket()
+        public async Task<List<Objet>> getAllSubjectsTicket()
         {
-            return this._context.Objets.ToList();
+            return await this._context.Objets.ToListAsync();
         }
     }
 }

@@ -30,18 +30,17 @@ namespace web_api.Controllers.Commercial
 
         [HttpGet]
         [Authorize(Policy = Policies.Commercial)]
-        public ContentResult GetDataForNewTicket()
+        public async Task<ContentResult> GetDataForNewTicket()
         {
-            EnablersService enablers = new EnablersService(this._context);
             EnablersService enablerService = new EnablersService(this._context);
 
             var context = new {
-                OpenModes = enablerService.getAllModeOuvertureTicket(),
-                Subjects = enablerService.getAllSubjectsTicket(),
+                OpenModes = await enablerService.getAllModeOuvertureTicket(),
+                Subjects = await enablerService.getAllSubjectsTicket(),
                 Localisations = new
                 {
-                    Zones = this._context.Zones.ToList(),
-                    Emplacements = this._context.Emplacements.ToList(),
+                    Zones = await this._context.Zones.ToListAsync(),
+                    Emplacements = await this._context.Emplacements.ToListAsync(),
                 }
             };
 

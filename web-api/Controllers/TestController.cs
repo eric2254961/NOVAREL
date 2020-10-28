@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using web_api.Models.Auth;
+using web_api.Services.Wstoll;
 
 namespace web_api.Controllers
 {
@@ -28,6 +29,14 @@ namespace web_api.Controllers
         public IActionResult GetAdminData()
         {
             return Ok("This is a response from Admin method");
+        }
+
+        [HttpGet("jwt")]
+        public async Task<IActionResult> TestJwt()
+        {
+            var api = new WstollApi();
+            var result = await api.GetCustomerByName("ake ake");
+            return Ok(result);
         }
     }
 }

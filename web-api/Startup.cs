@@ -54,8 +54,9 @@ namespace web_api
                     };
                 });
 
-            services.AddControllersWithViews();
-
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson( option => option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+           
             services.AddCors(c => {
                 c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin());
             });
@@ -66,6 +67,8 @@ namespace web_api
                 config.AddPolicy(Policies.User, Policies.UserPolicy());
                 config.AddPolicy(Policies.Commercial, Policies.CommercialPolicy());
             });
+
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

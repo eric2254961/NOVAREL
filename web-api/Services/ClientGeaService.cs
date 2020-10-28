@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using web_api.Services.Wstoll;
+using web_api.Services.Wstoll.Response;
 
 namespace web_api.Services
 {
@@ -119,6 +122,30 @@ namespace web_api.Services
     }
             }
         }";
+        }
+
+        public async Task<GetClientsByNameResponse> SearchClientByName(string name)
+        {
+            var api = new WstollApi();
+            var jsonString = await api.GetCustomerByName(name);
+            var response = JsonSerializer.Deserialize<GetClientsByNameResponse>(jsonString);
+            return response;            
+        }
+
+        public async Task<GetSubscriptionsAndTagsResponse> GetSubscriptionAndTagCustomer(string IdCustomer)
+        {
+            var api = new WstollApi();
+            var jsonString = await api.GetSubscriptionAndTags(IdCustomer);
+            var response = JsonSerializer.Deserialize<GetSubscriptionsAndTagsResponse>(jsonString);
+            return response;            
+        }
+
+        public async Task<GetCustomerDetailsResponse> GetCustomerByIdentity(string IdCustomer)
+        {
+            var api = new WstollApi();
+            var jsonString = await api.GetCustomerByIdentity(IdCustomer);
+            var response = JsonSerializer.Deserialize<GetCustomerDetailsResponse>(jsonString);
+            return response;            
         }
     }
 }

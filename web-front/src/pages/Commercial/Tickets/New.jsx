@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect} from "react";
 import {reduxForm, Field, Fields} from 'redux-form'
 import InputField from "../../../components/form/Input";
 import SelectField from "../../../components/form/Select";
@@ -10,7 +10,8 @@ import LocalisationInfos from "../../../components/LocalisationInfos";
 import VehiculeInfos from "../../../components/VehiculeInfos";
 import MultilineField from "../../../components/form/Multiline";
 import TypeTicketComponent from "../../../components/TypeTicket";
-import {DateTimePicker} from "@material-ui/pickers";
+import {useParams} from "react-router-dom";
+import ClientRx from "../../../reducer/Clients";
 
 function NewTicket(props){
 
