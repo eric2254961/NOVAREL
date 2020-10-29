@@ -18,6 +18,10 @@ namespace web_api.Services.Wstoll
         public WstollApi()
         {
             browser.BaseAddress = new Uri("https://api.pont-hkb.com");
+            
+            /* LIEN DE TEST API DANS LE RESEAU SOCOPRIM
+            browser.BaseAddress = new Uri("http://api.socoprim.ci");
+            */
 
             browser.DefaultRequestHeaders.Accept.Clear();
             browser.DefaultRequestHeaders.Accept.Add(

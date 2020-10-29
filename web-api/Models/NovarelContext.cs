@@ -8,6 +8,7 @@ using web_api.Models.Dto;
 using web_api.Models.Dto.Commercial;
 using web_api.Models.Dto.Organisation;
 using web_api.Models.Dto.Pont;
+using web_api.Models.Dto.Shared;
 
 namespace web_api.Models
 {
@@ -30,9 +31,38 @@ namespace web_api.Models
         public DbSet<Emplacement> Emplacements { get; set; }
         public DbSet<ModeOuverture> ModeOuvertures { get; set; }
         public DbSet<Objet> Objets { get; set; }
+        public DbSet<ActionTicket> ActionTickets { get; set; }
+        public DbSet<PieceJointe> PieceJointes { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ObjetTicket>()
+                .HasKey(ot => new { ot.ObjetId, ot.TicketId });
+
+            modelBuilder.Entity<ObjetTicket>()
+                .HasOne(ot => ot.Objet)
+                .WithMany(o => o.ObjetTickets)
+                .HasForeignKey(ot => ot.ObjetId);
+
+            modelBuilder.Entity<ObjetTicket>()
+                .HasOne(ot => ot.Ticket)
+                .WithMany(t => t.ObjetTickets)
+                .HasForeignKey(ot => ot.TicketId);
+            
+            modelBuilder.Entity<Objet>()
+                .HasMany(o => o.ObjetTickets)
+                .WithOne(ot => ot.Objet)
+                .HasForeignKey(ot => ot.ObjetId);
+            
+            modelBuilder.Entity<Ticket>()
+                .HasMany(t => t.ObjetTickets)
+                .WithOne(ot => ot.Ticket)
+                .HasForeignKey(ot => ot.TicketId);
+
+
             modelBuilder.Entity<Objet>().HasData(
              new Objet { Id = 1, Libelle = "Problèmes liés à la classification", Module = TypeObjet.Commercial },
              new Objet { Id = 2, Libelle = "Etat du réseau", Module = TypeObjet.Commercial },
