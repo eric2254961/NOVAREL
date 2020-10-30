@@ -28,18 +28,24 @@ namespace web_api.Controllers.Commercial
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("{IdClient}")]
         [Authorize(Policy = Policies.Commercial)]
-        public async Task<ContentResult> GetDataForNewTicket()
+        public async Task<ContentResult> GetDataForNewTicket(string IdClient)
         {
             EnablersService enablerService = new EnablersService(this._context);
+            var clientService = new ClientGeaService();
+            var subscriptions = await clientService.GetSubscriptionAndTagCustomerAsync(IdClient);
+            var customer      = await clientService.GetCustomerByIdentityAsync(IdClient);
+
+            customer.PAYLOAD.SUBSCRIPTIONS = subscriptions.PAYLOAD;
 
             var context = new {
-                OpenModes = await enablerService.getAllModeOuvertureTicket(),
-                Subjects = await enablerService.getAllSubjectsTicket(),
+                OpenModes = await enablerService.getAllModeOuvertureTicketAsync(),
+                Subjects  = await enablerService.getAllSubjectsTicketAsync(),
+                Client    = customer.PAYLOAD,
                 Localisations = new
                 {
-                    Zones = await this._context.Zones.ToListAsync(),
+                    Zones        = await this._context.Zones.ToListAsync(),
                     Emplacements = await this._context.Emplacements.ToListAsync(),
                 }
             };

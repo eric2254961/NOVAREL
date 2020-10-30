@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using web_api.Models.Dto.Commercial;
 
-namespace web_api.Models.Dto
+namespace web_api.Models.Dto.Shared
 {
     public class Objet
     {

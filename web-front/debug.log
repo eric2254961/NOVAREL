@@ -1,0 +1,5 @@
+[1012/101551.882:ERROR:settings.cc(430)] Settings version is not 5
+[1012/102550.615:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\SUPPORT.IT\AppData\Local\Microsoft\Edge\User Data\Crashpad\attachments\48945f02-7002-4913-a510-51e6d56ea23d: Le chemin d’accès spécifié est introuvable. (0x3)
+[1012/102550.620:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\SUPPORT.IT\AppData\Local\Microsoft\Edge\User Data\Crashpad\attachments\4c1d31c2-6c55-449c-8e23-86b6c5162c95: Le chemin d’accès spécifié est introuvable. (0x3)
+[1012/102550.624:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\SUPPORT.IT\AppData\Local\Microsoft\Edge\User Data\Crashpad\attachments\ccb9ad87-c61e-432c-880c-0072c6d38f7a: Le chemin d’accès spécifié est introuvable. (0x3)
+[1012/102550.626:ERROR:directory_reader_win.cc(43)] FindFirstFile: Le chemin d’accès spécifié est introuvable. (0x3)

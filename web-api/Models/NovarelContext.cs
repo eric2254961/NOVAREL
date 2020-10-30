@@ -31,9 +31,11 @@ namespace web_api.Models
         public DbSet<Emplacement> Emplacements { get; set; }
         public DbSet<ModeOuverture> ModeOuvertures { get; set; }
         public DbSet<Objet> Objets { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<ObjetTicket> ObjetTickets { get; set; }
         public DbSet<ActionTicket> ActionTickets { get; set; }
         public DbSet<PieceJointe> PieceJointes { get; set; }
-
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

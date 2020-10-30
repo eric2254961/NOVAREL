@@ -36,7 +36,7 @@ namespace web_api.Services.Wstoll
         }
 
 
-        public async Task<string> GetCustomerByName(string name)
+        public async Task<string> GetCustomerByNameAsync(string name)
         {
             browser.DefaultRequestHeaders.Add("Authorization","Bearer " + GetToken(WstollAction.GET_CUSTOMER_BY_NAME));
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "/api/wstoll/customers?name=" + HttpUtility.UrlEncode(name));
@@ -47,7 +47,7 @@ namespace web_api.Services.Wstoll
             return await result.Content.ReadAsStringAsync().ConfigureAwait(false);      
         }
 
-        public async Task<string> GetSubscriptionAndTags(string IdCustomer)
+        public async Task<string> GetSubscriptionAndTagsAsync(string IdCustomer)
         {
             browser.DefaultRequestHeaders.Add("Authorization","Bearer " + GetToken(WstollAction.GET_SUBSCRIPTIONS_TAGS));
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, string.Format("/api/wstoll/customers/{0}/subscriptions/tags",IdCustomer));
@@ -58,7 +58,7 @@ namespace web_api.Services.Wstoll
             return await result.Content.ReadAsStringAsync().ConfigureAwait(false);      
         }
 
-        public async Task<string> GetCustomerByIdentity(string IdCustomer)
+        public async Task<string> GetCustomerByIdentityAsync(string IdCustomer)
         {
             browser.DefaultRequestHeaders.Add("Authorization","Bearer " + GetToken(WstollAction.GET_CUSTOMER_BY_IDENTITY));
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, string.Format("/api/wstoll/customers/{0}",IdCustomer));

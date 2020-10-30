@@ -10,13 +10,10 @@ import {connect} from "react-redux";
 function TicketNouveau(props){
 
   let { clientId } = useParams();
-  console.log("Client ID : ", clientId)
 
   useEffect(() => {
-    props.getTicketData()
-    props.getClientDetails(clientId)
+    props.getTicketData(clientId)
   }, [])
-
 
   const action = (values) => {
     console.log("Forms", values);
@@ -29,14 +26,16 @@ function TicketNouveau(props){
       })
   }
 
-  return (<React.Fragment>
-    <div className="col-md-8">
-      <NewTicket onSubmit={action} data={props.context}/>
-    </div>
-    <div className="col-md-4">
-      <DetailsMiniCLient client={props.client} />
-    </div>
-  </React.Fragment>)
+  return (
+    <React.Fragment>
+      <div className="col-md-8">
+        <NewTicket onSubmit={action} data={props.context}/>
+      </div>
+      <div className="col-md-4">
+        <DetailsMiniCLient client={props.client} />
+      </div>
+    </React.Fragment>
+  )
 }
 
 const getClientDetails = ClientRx.details;

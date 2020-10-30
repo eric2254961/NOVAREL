@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace web_api.Migrations
 {
-    public partial class MyMigration3 : Migration
+    public partial class MyMigration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -78,28 +78,6 @@ namespace web_api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ticket",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Reference = table.Column<string>(maxLength: 12, nullable: false),
-                    ClientId = table.Column<string>(maxLength: 12, nullable: false),
-                    ModeOuvertureId = table.Column<int>(nullable: false),
-                    DateFait = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ticket", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Ticket_ModeOuvertures_ModeOuvertureId",
-                        column: x => x.ModeOuvertureId,
-                        principalTable: "ModeOuvertures",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Emplacements",
                 columns: table => new
                 {
@@ -120,6 +98,39 @@ namespace web_api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tickets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Reference = table.Column<string>(maxLength: 12, nullable: false),
+                    ClientId = table.Column<string>(maxLength: 12, nullable: false),
+                    ModeOuvertureId = table.Column<int>(nullable: false),
+                    EmplacementId = table.Column<int>(nullable: false),
+                    DateFait = table.Column<DateTime>(nullable: false),
+                    IsCloture = table.Column<bool>(nullable: false),
+                    DateCloture = table.Column<DateTime>(nullable: true),
+                    DateOuverture = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tickets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Emplacements_EmplacementId",
+                        column: x => x.EmplacementId,
+                        principalTable: "Emplacements",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tickets_ModeOuvertures_ModeOuvertureId",
+                        column: x => x.ModeOuvertureId,
+                        principalTable: "ModeOuvertures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ActionTickets",
                 columns: table => new
                 {
@@ -134,9 +145,9 @@ namespace web_api.Migrations
                 {
                     table.PrimaryKey("PK_ActionTickets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ActionTickets_Ticket_TicketId",
+                        name: "FK_ActionTickets_Tickets_TicketId",
                         column: x => x.TicketId,
-                        principalTable: "Ticket",
+                        principalTable: "Tickets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -148,7 +159,7 @@ namespace web_api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ObjetTicket",
+                name: "ObjetTickets",
                 columns: table => new
                 {
                     ObjetId = table.Column<int>(nullable: false),
@@ -156,17 +167,17 @@ namespace web_api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ObjetTicket", x => new { x.ObjetId, x.TicketId });
+                    table.PrimaryKey("PK_ObjetTickets", x => new { x.ObjetId, x.TicketId });
                     table.ForeignKey(
-                        name: "FK_ObjetTicket_Objets_ObjetId",
+                        name: "FK_ObjetTickets_Objets_ObjetId",
                         column: x => x.ObjetId,
                         principalTable: "Objets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ObjetTicket_Ticket_TicketId",
+                        name: "FK_ObjetTickets_Tickets_TicketId",
                         column: x => x.TicketId,
-                        principalTable: "Ticket",
+                        principalTable: "Tickets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -192,9 +203,9 @@ namespace web_api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PieceJointes_Ticket_TicketId",
+                        name: "FK_PieceJointes_Tickets_TicketId",
                         column: x => x.TicketId,
-                        principalTable: "Ticket",
+                        principalTable: "Tickets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -215,14 +226,14 @@ namespace web_api.Migrations
                 columns: new[] { "Id", "Libelle", "Module" },
                 values: new object[,]
                 {
-                    { 8, "Autres objets", "COMM" },
-                    { 7, "Problèmes liés aux opérateurs mobile", "COMM" },
-                    { 5, "Problèmes liés au badges", "COMM" },
                     { 6, "Problèmes liés au personnel", "COMM" },
+                    { 5, "Problèmes liés au badges", "COMM" },
+                    { 4, "Problèmes liés au dépannage", "COMM" },
                     { 3, "Sécurité", "COMM" },
                     { 2, "Etat du réseau", "COMM" },
                     { 1, "Problèmes liés à la classification", "COMM" },
-                    { 4, "Problèmes liés au dépannage", "COMM" }
+                    { 8, "Autres objets", "COMM" },
+                    { 7, "Problèmes liés aux opérateurs mobile", "COMM" }
                 });
 
             migrationBuilder.InsertData(
@@ -230,10 +241,10 @@ namespace web_api.Migrations
                 columns: new[] { "Id", "Libelle" },
                 values: new object[,]
                 {
-                    { 1, "Commercial" },
-                    { 2, "Viabilite" },
+                    { 4, "Direction" },
                     { 3, "Informatique" },
-                    { 4, "Direction" }
+                    { 2, "Viabilite" },
+                    { 1, "Commercial" }
                 });
 
             migrationBuilder.InsertData(
@@ -241,10 +252,10 @@ namespace web_api.Migrations
                 columns: new[] { "Id", "Libelle" },
                 values: new object[,]
                 {
-                    { 3, "Viaduc (Pont)" },
+                    { 4, "Aire de péage" },
                     { 1, "Section courante Nord" },
-                    { 2, "Section courante Sud" },
-                    { 4, "Aire de péage" }
+                    { 3, "Viaduc (Pont)" },
+                    { 2, "Section courante Sud" }
                 });
 
             migrationBuilder.InsertData(
@@ -277,8 +288,8 @@ namespace web_api.Migrations
                 column: "ZoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ObjetTicket_TicketId",
-                table: "ObjetTicket",
+                name: "IX_ObjetTickets_TicketId",
+                table: "ObjetTickets",
                 column: "TicketId");
 
             migrationBuilder.CreateIndex(
@@ -292,18 +303,20 @@ namespace web_api.Migrations
                 column: "TicketId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ticket_ModeOuvertureId",
-                table: "Ticket",
+                name: "IX_Tickets_EmplacementId",
+                table: "Tickets",
+                column: "EmplacementId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_ModeOuvertureId",
+                table: "Tickets",
                 column: "ModeOuvertureId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Emplacements");
-
-            migrationBuilder.DropTable(
-                name: "ObjetTicket");
+                name: "ObjetTickets");
 
             migrationBuilder.DropTable(
                 name: "PieceJointes");
@@ -312,22 +325,25 @@ namespace web_api.Migrations
                 name: "Services");
 
             migrationBuilder.DropTable(
-                name: "Zones");
-
-            migrationBuilder.DropTable(
                 name: "Objets");
 
             migrationBuilder.DropTable(
                 name: "ActionTickets");
 
             migrationBuilder.DropTable(
-                name: "Ticket");
+                name: "Tickets");
 
             migrationBuilder.DropTable(
                 name: "Utilisateurs");
 
             migrationBuilder.DropTable(
+                name: "Emplacements");
+
+            migrationBuilder.DropTable(
                 name: "ModeOuvertures");
+
+            migrationBuilder.DropTable(
+                name: "Zones");
         }
     }
 }

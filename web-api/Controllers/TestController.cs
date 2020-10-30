@@ -35,7 +35,7 @@ namespace web_api.Controllers
         public async Task<IActionResult> TestJwt()
         {
             var api = new WstollApi();
-            var result = await api.GetCustomerByName("ake ake");
+            var result = await api.GetCustomerByNameAsync("ake ake");
             return Ok(result);
         }
     }

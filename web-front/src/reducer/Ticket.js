@@ -4,15 +4,20 @@ import {showNotification, NotificationType} from "./Notification";
 const TICKET_NEW = "TICKET_NEW"
 const TICKET_ADD = "TICKET_ADD"
 const TICKET_LIST = "TICKET_LIST"
+const CLIENT_DETAILS = "CLIENT_DETAILS"
 
-export function getDataForNew(){
+export function getDataForNew(idClient){
     return dispatch => {
-        axios.get(`/commercial/tickets/GetDataForNewTicket`)
+        axios.get(`/commercial/tickets/GetDataForNewTicket/${idClient}`)
             .then((response) => {
                 console.log(response)
                 dispatch({
                     type: TICKET_NEW,
                     payload: response.data
+                })
+                dispatch({
+                    type: CLIENT_DETAILS,
+                    payload: response.data.Client
                 })
             })
             .catch((error) => {

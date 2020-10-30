@@ -127,23 +127,23 @@ namespace web_api.Services
         public async Task<GetClientsByNameResponse> SearchClientByName(string name)
         {
             var api = new WstollApi();
-            var jsonString = await api.GetCustomerByName(name);
+            var jsonString = await api.GetCustomerByNameAsync(name);
             var response = JsonSerializer.Deserialize<GetClientsByNameResponse>(jsonString);
             return response;            
         }
 
-        public async Task<GetSubscriptionsAndTagsResponse> GetSubscriptionAndTagCustomer(string IdCustomer)
+        public async Task<GetSubscriptionsAndTagsResponse> GetSubscriptionAndTagCustomerAsync(string IdCustomer)
         {
             var api = new WstollApi();
-            var jsonString = await api.GetSubscriptionAndTags(IdCustomer);
+            var jsonString = await api.GetSubscriptionAndTagsAsync(IdCustomer);
             var response = JsonSerializer.Deserialize<GetSubscriptionsAndTagsResponse>(jsonString);
             return response;            
         }
 
-        public async Task<GetCustomerDetailsResponse> GetCustomerByIdentity(string IdCustomer)
+        public async Task<GetCustomerDetailsResponse> GetCustomerByIdentityAsync(string IdCustomer)
         {
             var api = new WstollApi();
-            var jsonString = await api.GetCustomerByIdentity(IdCustomer);
+            var jsonString = await api.GetCustomerByIdentityAsync(IdCustomer);
             var response = JsonSerializer.Deserialize<GetCustomerDetailsResponse>(jsonString);
             return response;            
         }

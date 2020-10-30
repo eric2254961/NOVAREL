@@ -31,8 +31,8 @@ namespace web_api.Controllers.Commercial
         public async Task<ContentResult> ClientGeaDetails(String IdClient)
         {
             var clientService = new ClientGeaService();
-            var subscriptions = await clientService.GetSubscriptionAndTagCustomer(IdClient);
-            var customer      = await clientService.GetCustomerByIdentity(IdClient);
+            var subscriptions = await clientService.GetSubscriptionAndTagCustomerAsync(IdClient);
+            var customer      = await clientService.GetCustomerByIdentityAsync(IdClient);
 
             customer.PAYLOAD.SUBSCRIPTIONS = subscriptions.PAYLOAD;
             string json = JsonConvert.SerializeObject(customer.PAYLOAD);

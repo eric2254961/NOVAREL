@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import PropTypes, {object} from "prop-types"
+import PropTypes from "prop-types"
 import {TextField, MenuItem} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 
