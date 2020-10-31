@@ -14,6 +14,7 @@ using web_api.Models;
 using web_api.Models.Auth;
 using web_api.Models.Dto.Commercial;
 using web_api.Services;
+using web_api.Views.Notifications;
 
 namespace web_api.Controllers.Commercial
 {
@@ -48,6 +49,20 @@ namespace web_api.Controllers.Commercial
                     Zones        = await this._context.Zones.ToListAsync(),
                     Emplacements = await this._context.Emplacements.ToListAsync(),
                 }
+            };
+
+            return Content(JsonConvert.SerializeObject(context), MediaTypeHeaderValue.Parse("application/json"));
+        }
+
+        [HttpPost]
+        [Authorize(Policy = Policies.Commercial)]
+        public async Task<ContentResult> AddNewTicket()
+        {
+
+            var context = new
+            {
+                Type = Notification.Success,
+                Message = "Ticket créé avec succès"
             };
 
             return Content(JsonConvert.SerializeObject(context), MediaTypeHeaderValue.Parse("application/json"));

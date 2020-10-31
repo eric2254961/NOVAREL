@@ -33,7 +33,7 @@ function DetailsMiniCLient(props){
         </div>}
 
         {client && <div className="card card-profile">
-            <div className="card-body">
+            {client.STATUS !== "0" && <div className="card-body">
                 <h4 className="card-title">Abonnements</h4>
                 <div className={`${classes.root} form-group`}>
                     <TextField
@@ -48,11 +48,11 @@ function DetailsMiniCLient(props){
                 </div>
                 <p className="text-left">Statut : <b>{client.SUBSCRIPTIONS[indexAbonnement].STATUS === "1" ? "Actif" : "Non actif (Voir POS GEA)"}</b></p>
                 <p className="text-left">Solde : <b>{client.SUBSCRIPTIONS[indexAbonnement].SOLDE}</b> Fcfa</p>
-            </div>
+            </div>}
         </div>}
 
         {client && <div className="card card-profile">
-            <div className="card-body">
+            {client.STATUS !== "0" && <div className="card-body">
                 <h4 className="card-title">Badges</h4>
                 <ul>
                     {client.SUBSCRIPTIONS[indexAbonnement].TAGS.map((item,k) => {
@@ -63,8 +63,7 @@ function DetailsMiniCLient(props){
                         </li>
                     })}
                 </ul>
-
-            </div>
+            </div>}
         </div>}
         </React.Fragment>
     )
