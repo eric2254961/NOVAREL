@@ -14,6 +14,7 @@ using web_api.Models;
 using web_api.Models.Auth;
 using web_api.Models.Dto.Commercial;
 using web_api.Services;
+using web_api.Validator.Commercial.Ticket;
 using web_api.Views.Notifications;
 
 namespace web_api.Controllers.Commercial
@@ -56,14 +57,17 @@ namespace web_api.Controllers.Commercial
 
         [HttpPost]
         [Authorize(Policy = Policies.Commercial)]
-        public async Task<ContentResult> AddNewTicket()
+        public async Task<ContentResult> AddNewTicket([FromBody] TicketValidator input)
         {
+            Object context = new { Type = 1, Message = "" };
 
-            var context = new
+            if (ModelState.IsValid)
             {
-                Type = Notification.Success,
-                Message = "Ticket créé avec succès"
-            };
+                context = new { Type = Notification.Success, Message = "Erreur de validation" };
+
+            }
+            //var t = new Task<string>(Func<string> () { })
+            context = new  { Type = Notification.Success,  Message = "Ticket créé avec succès" };
 
             return Content(JsonConvert.SerializeObject(context), MediaTypeHeaderValue.Parse("application/json"));
         }

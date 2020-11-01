@@ -7,13 +7,14 @@ function MultilineField(props){
     return(
         <div className="form-group bmd-form-group">
             <TextField
-               label={label}
-               {...input}
-               multiline
-               rows={5}
-               fullWidth
-               placeholder={placeholder}
+                label={label}
+                {...input}
+                multiline
+                rows={5}
+                fullWidth
+                placeholder={placeholder}
             />
+            {touched && error && <span className="text-error">{error}</span>}
         </div>
     )
 }

@@ -14,7 +14,7 @@ function TypeTicketComponent(props){
             fullWidth
             {...input}
         >
-            <MenuItem value={TypeTicket.RECLAMATION}>Information</MenuItem>
+            <MenuItem value={TypeTicket.RECLAMATION}>Réclamation</MenuItem>
             <MenuItem value={TypeTicket.PLAINTE}>Plainte</MenuItem>
             <MenuItem value={TypeTicket.SUGGESTION}>Suggestion</MenuItem>
             <MenuItem value={TypeTicket.INFORMATION}>Information</MenuItem>
