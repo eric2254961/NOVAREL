@@ -6,17 +6,20 @@ function SelectField(props){
     const {input, label, meta: {touched, error}, data} = props
 
     return(
-        <TextField
+        <React.Fragment>
+            <TextField
             select
             label={label}
             size="small"
             fullWidth
             {...input}
-        >
-            {data.map((item,k) => {
-                return <MenuItem key={k} value={item.Id}>{item.Libelle}</MenuItem>
-            })}
-        </TextField>
+            >
+                {data.map((item,k) => {
+                    return <MenuItem key={k} value={item.Id}>{item.Libelle}</MenuItem>
+                })}
+            </TextField>
+            {error && <span className="text-danger">{error}</span>}
+        </React.Fragment>
     )
 }
 SelectField.propTypes = {

@@ -38,7 +38,6 @@ namespace web_api.Controllers.Commercial
             var clientService = new ClientGeaService();
             var subscriptions = await clientService.GetSubscriptionAndTagCustomerAsync(IdClient);
             var customer      = await clientService.GetCustomerByIdentityAsync(IdClient);
-
             customer.PAYLOAD.SUBSCRIPTIONS = subscriptions.PAYLOAD;
 
             var context = new {
@@ -59,15 +58,35 @@ namespace web_api.Controllers.Commercial
         [Authorize(Policy = Policies.Commercial)]
         public async Task<ContentResult> AddNewTicket([FromBody] TicketValidator input)
         {
-            Object context = new { Type = 1, Message = "" };
+            Object context = new { Type = 1, Message = "" , Reference = ""};
 
             if (ModelState.IsValid)
             {
-                context = new { Type = Notification.Success, Message = "Erreur de validation" };
-
+                var service = new TicketsService(_context);
+                var ticket = await service.AddNewticket(input);
+                context = new { Type = Notification.Success, Message = string.Format("Ticket {0} créé avec succès.", ticket.Reference), Reference = ticket.Reference };
             }
-            //var t = new Task<string>(Func<string> () { })
-            context = new  { Type = Notification.Success,  Message = "Ticket créé avec succès" };
+            else
+            {
+                context = new { Type = Notification.Error, Message = "Erreur de validation", Reference= "" };
+            }
+
+            return Content(JsonConvert.SerializeObject(context), MediaTypeHeaderValue.Parse("application/json"));
+        }
+
+        [HttpGet("{Reference}")]
+        [Authorize(Policy = Policies.Commercial)]
+        public async Task<ContentResult> GetTicketDetails(string Reference)
+        {
+            var service = new TicketsService(_context);
+            var ticket  = await service.GetTicketWithDetails(Reference);
+
+            var clientService = new ClientGeaService();
+            var subscriptions = await clientService.GetSubscriptionAndTagCustomerAsync(ticket.ClientId);
+            var customer = await clientService.GetCustomerByIdentityAsync(ticket.ClientId);
+            customer.PAYLOAD.SUBSCRIPTIONS = subscriptions.PAYLOAD;
+
+            var context = new { Ticket = ticket, Client = customer };
 
             return Content(JsonConvert.SerializeObject(context), MediaTypeHeaderValue.Parse("application/json"));
         }

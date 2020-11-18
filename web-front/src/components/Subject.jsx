@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import Checkbox from '@material-ui/core/Checkbox';
 
 function SubjectChoice(props){
-    const {data, label, required, options, input, meta:{ asyncValidating, touched, error }} = props
- 
-
+    const {data, label, required, options, input, meta:{ touched, error }} = props
+    
     let checkboxes = () => {
         return data.map((item, k) => {
             return  (
@@ -20,10 +19,8 @@ function SubjectChoice(props){
                         const newValue = [...input.value];
                         
                         if (event.target.checked) {
-                            console.log('coché')
                             newValue.push(item.Id);
                         } else {
-                            console.log("décoché",newValue.indexOf(item.Id))
                             newValue.splice(newValue.indexOf(item.Id), 1);
                         }
 
@@ -40,8 +37,8 @@ function SubjectChoice(props){
             <h4>Objets</h4>
             <div>
                 {checkboxes()}
-                {touched && error && <span className="text-error">{error}</span>}
             </div>
+            {touched && error && <span className="text-danger">{error}</span>}
         </React.Fragment>
     )
 }

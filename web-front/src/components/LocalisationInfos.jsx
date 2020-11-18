@@ -14,7 +14,6 @@ function LocalisationInfos(props){
             }
         })
         setEmplacements(Emplacements)
-        //console.log("Emplacement for ID", id, {Emplacements: Emplacements},data.Emplacements)
     }
 
     return(
@@ -46,6 +45,7 @@ function LocalisationInfos(props){
                         return <MenuItem key={k} value={item.Id}>{item.Libelle}</MenuItem>
                     })}
                 </TextField>
+                {emplacement.meta.error && <span className="text-danger">{emplacement.meta.error}</span>}
             </div>
         </React.Fragment>
     )

@@ -1,26 +1,47 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import NewTicket from "./New";
 import DetailsMiniCLient from "../Clients/details.mini";
-import {useParams} from "react-router-dom";
+import {Redirect, useParams} from "react-router-dom";
 import TicketRx from "../../../reducer/Ticket";
 import {connect} from "react-redux";
 
 function TicketNouveau(props){
 
   let { clientId } = useParams();
+  let [urlSuccess, setUrlSuccess] = useState("")
 
   useEffect(() => {
     props.getTicketData(clientId)
   }, [])
 
+  let handleSubmit = (values) => {
+    let redirectUrl = props.addTicketNew(values);
+    redirectUrl.then((url) => {
+      setUrlSuccess(url);
+    });
+  }
+
+  let datetime = new Date();
+  let mois = (datetime.getMonth()+1) > 9 ? (datetime.getMonth()+1) : "0"+ (datetime.getMonth()+1);
+  let jour = datetime.getDate() > 9 ? datetime.getDate() : "0"+datetime.getDate();
+  let heure = datetime.getHours() > 9 ? datetime.getHours() : "0"+datetime.getHours();
+  let minute = datetime.getMinutes() > 9 ? datetime.getMinutes() : "0"+datetime.getMinutes();
+
+  let initialValues = {clientGeaId: clientId, datetime: jour+"/"+mois+"/"+datetime.getFullYear()+" "+heure+":"+minute}
+
   return (
     <React.Fragment>
-      <div className="col-md-8">
-        <NewTicket asyncValidate={props.validateTicket} onSubmit={props.addTicketNew} data={props.context}/>
-      </div>
-      <div className="col-md-4">
-        <DetailsMiniCLient client={props.client} />
-      </div>
+    {urlSuccess === "" ? 
+      <React.Fragment>
+        <div className="col-md-8">
+          <NewTicket initialValues={initialValues} onSubmit={handleSubmit} data={props.context}/>
+        </div>
+        <div className="col-md-4">
+          <DetailsMiniCLient client={props.client} />
+        </div>
+      </React.Fragment> :
+      <Redirect to={urlSuccess} />
+    }
     </React.Fragment>
   )
 }
@@ -34,10 +55,9 @@ const mapStateToProps = store =>  {
 
 const getTicketData = TicketRx.getNew;
 const addTicketNew  = TicketRx.addNew;
-const validateTicket = TicketRx.validator
 
 const mapDispatchToProps = {
-  addTicketNew, getTicketData, validateTicket
+  addTicketNew, getTicketData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (TicketNouveau)

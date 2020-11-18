@@ -5,9 +5,12 @@ function InputField(props){
     const {input, label, type, meta: {touched, error}} = props
 
     return(
-        <div className="form-group bmd-form-group">
-            <TextField label={label} {...input} />
-        </div>
+        <React.Fragment>
+            <div className="form-group bmd-form-group">
+                <TextField label={label} {...input} />
+            </div>
+            {error && <span className="text-danger">{error}</span>}
+        </React.Fragment>
     )
 }
 export default InputField;

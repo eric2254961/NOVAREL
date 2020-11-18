@@ -129,16 +129,25 @@ namespace web_api.Migrations
                     b.Property<int>("EmplacementId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Immatriculation")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsCloture")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Marque")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModeOuvertureId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Modele")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Reference")
                         .IsRequired()
-                        .HasColumnType("nvarchar(12)")
-                        .HasMaxLength(12);
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 

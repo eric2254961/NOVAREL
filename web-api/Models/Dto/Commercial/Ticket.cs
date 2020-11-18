@@ -16,7 +16,7 @@ namespace web_api.Models.Dto.Commercial
         [Key]
         public int Id { get; set; }
         [Required]
-        [MaxLength(12)]
+        [MaxLength(20)]
         public String Reference { get; set; }
         [Required]
         [MaxLength(12)]
@@ -34,9 +34,14 @@ namespace web_api.Models.Dto.Commercial
         public DateTime DateOuverture { get; set; }
         [Required]
         public string Description { get; set; }
+        public string Immatriculation { get; set; }
+        public string Marque { get; set; }
+        public string Modele { get; set; }
         public ICollection<PieceJointe> PieceJointes { get; set; }
       
         public virtual ICollection<ObjetTicket> ObjetTickets { get; set; }
+
+        public ICollection<ActionTicket> Actions { get; set; }
 
     }
 }

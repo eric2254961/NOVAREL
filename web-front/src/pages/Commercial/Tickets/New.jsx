@@ -9,12 +9,11 @@ import LocalisationInfos from "../../../components/LocalisationInfos";
 import VehiculeInfos from "../../../components/VehiculeInfos";
 import MultilineField from "../../../components/form/Multiline";
 import TypeTicketComponent from "../../../components/TypeTicket";
-import TicketRx from "../../../reducer/Ticket";
 
 function NewTicket(props){
 
     const { handleSubmit, pristine, reset, submitting, data: { Localisations } } = props
-
+    
     return (
         <div className="card">
             <div className="card-header card-header-text">
@@ -23,9 +22,10 @@ function NewTicket(props){
             <div className="card-body">
                 <form onSubmit={handleSubmit}>
                     <div className="row">
+                        <Field name="clientGeaId" component="input" type="hidden" />
                         <div className="col-md-4">
                             <Field
-                                normalize = {(value, previousValue, allValues, previousAllValues) => { return (value)}}
+                                normalize = {(value) => { return (value)}}
                                 component={DateTime} name="datetime" label="Date et heure des faits" showTime={true}/>
                         </div>
                         <div className="col-md-4">
@@ -92,10 +92,7 @@ NewTicket.defaultProps = {
 }
 
 export default reduxForm({
-    form: 'newticket',
-    asyncValidate : (values, dispatch) => {
-        TicketRx.validator(values, dispatch)
-    }
+    form: 'newticket'
 })(NewTicket)
 
 

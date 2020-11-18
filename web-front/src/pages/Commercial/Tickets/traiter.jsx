@@ -4,18 +4,37 @@ function TraiterTicket(props){
 
     return(
         <React.Fragment>
-           <div class="card">
-                <div class="card-header">
-                <h3 class="card-title">Ticket: </h3>
-                <div class="card-toolbar">
-                    <div class="example-tools justify-content-center">
-                        <span class="example-toggle" data-toggle="tooltip" title="" data-original-title="View code"></span>
-                        <span class="example-copy" data-toggle="tooltip" title="" data-original-title="Copy code"></span>
-                    </div>
+            <div class="card">
+                <div className="row">
+                <div className="col-md-2">
+                <button type="button" className="btn btn-success pull-right">Traiter</button>
                 </div>
-                <form class="form">
-                    <div class="card-body">
+                
+                <div className="col-md-2">
+                <button type="button" className="btn btn-success pull-right">Transférer</button>
+                </div>
+                
+                <div className="col-md-2">
+                <button type="button" className="btn btn-success pull-right">Modifier</button>
+                </div>
+                
+                <div className="col-md-2">
+                <button type="button" className="btn btn-success pull-right">Clôturer</button>
+                </div>
+                </div>
+            </div>
 
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Ticket: </h3>
+                    <div class="card-toolbar">
+                        <div class="example-tools justify-content-center">
+                            <span class="example-toggle" data-toggle="tooltip" title="" data-original-title="View code"></span>
+                            <span class="example-copy" data-toggle="tooltip" title="" data-original-title="Copy code"></span>
+                        </div>
+                    </div>
+                    <form class="form">
+                    <div class="card-body">
                         <div class="form-group row">
                             <div class="col-lg-4">
                                 <label>Client:</label>
@@ -57,7 +76,7 @@ function TraiterTicket(props){
                             <label>Situation:</label>
                             <input type="text" class="form-control" value="Contacts" readonly/>
                         </div>
-                         <div class="col-lg-3">
+                        <div class="col-lg-3">
                             <label>Classification:</label>
                             <input type="text" class="form-control" value="Contacts" readonly/>
                         </div>
@@ -75,8 +94,8 @@ function TraiterTicket(props){
 
                     </div>
                 </form>
+                </div>
             </div>
-           </div>
         </React.Fragment>
     )
 }

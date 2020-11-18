@@ -6,19 +6,22 @@ function TypeTicketComponent(props){
     const {input, label, meta: {touched, error}, data} = props
 
     return (
-        <TextField
-            select
-            defaultValue={TypeTicket.INFORMATION}
-            label={label}
-            size="small"
-            fullWidth
-            {...input}
-        >
-            <MenuItem value={TypeTicket.RECLAMATION}>Réclamation</MenuItem>
-            <MenuItem value={TypeTicket.PLAINTE}>Plainte</MenuItem>
-            <MenuItem value={TypeTicket.SUGGESTION}>Suggestion</MenuItem>
-            <MenuItem value={TypeTicket.INFORMATION}>Information</MenuItem>
-        </TextField>
+        <React.Fragment>
+            <TextField
+                select
+                defaultValue={TypeTicket.INFORMATION}
+                label={label}
+                size="small"
+                fullWidth
+                {...input}
+            >
+                <MenuItem value={TypeTicket.RECLAMATION}>Réclamation</MenuItem>
+                <MenuItem value={TypeTicket.PLAINTE}>Plainte</MenuItem>
+                <MenuItem value={TypeTicket.SUGGESTION}>Suggestion</MenuItem>
+                <MenuItem value={TypeTicket.INFORMATION}>Information</MenuItem>
+            </TextField>
+            {error && <span className="text-danger">{error}</span>}
+        </React.Fragment>
     )
 }
 

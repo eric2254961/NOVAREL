@@ -14,7 +14,7 @@ function MultilineField(props){
                 fullWidth
                 placeholder={placeholder}
             />
-            {touched && error && <span className="text-error">{error}</span>}
+            {touched && error && <span className="text-danger">{error}</span>}
         </div>
     )
 }

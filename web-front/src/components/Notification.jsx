@@ -45,7 +45,6 @@ class Notification extends React.Component{
         this.createNotification(this.props.notification.type, this.props.notification.message)()
         this.props.hide();
       }
-
     }
   }
 }
