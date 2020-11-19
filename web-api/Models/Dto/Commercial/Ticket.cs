@@ -11,8 +11,6 @@ namespace web_api.Models.Dto.Commercial
 {
     public class Ticket
     {
-        
-        
         [Key]
         public int Id { get; set; }
         [Required]

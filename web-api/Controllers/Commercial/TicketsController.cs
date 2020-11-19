@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using web_api.Models;
 using web_api.Models.Auth;
 using web_api.Models.Dto.Commercial;
+using web_api.Models.ViewModel;
 using web_api.Services;
 using web_api.Validator.Commercial.Ticket;
 using web_api.Views.Notifications;
@@ -79,14 +80,14 @@ namespace web_api.Controllers.Commercial
         public async Task<ContentResult> GetTicketDetails(string Reference)
         {
             var service = new TicketsService(_context);
-            var ticket  = await service.GetTicketWithDetails(Reference);
+            var ticketObjets  = service.GetTicketWithDetails(Reference);
 
             var clientService = new ClientGeaService();
-            var subscriptions = await clientService.GetSubscriptionAndTagCustomerAsync(ticket.ClientId);
-            var customer = await clientService.GetCustomerByIdentityAsync(ticket.ClientId);
+            var subscriptions = await clientService.GetSubscriptionAndTagCustomerAsync(ticketObjets.Ticket.ClientId);
+            var customer = await clientService.GetCustomerByIdentityAsync(ticketObjets.Ticket.ClientId);
             customer.PAYLOAD.SUBSCRIPTIONS = subscriptions.PAYLOAD;
 
-            var context = new { Ticket = ticket, Client = customer };
+            var context = new TicketTraitementViewModel { Ticket = ticketObjets.Ticket, Objets = ticketObjets.Objets, Client = customer };
 
             return Content(JsonConvert.SerializeObject(context), MediaTypeHeaderValue.Parse("application/json"));
         }

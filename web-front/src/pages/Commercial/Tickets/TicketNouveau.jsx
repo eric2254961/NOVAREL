@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import NewTicket from "./New";
+import NewTicket from "./component/New";
 import DetailsMiniCLient from "../Clients/details.mini";
 import {Redirect, useParams} from "react-router-dom";
 import TicketRx from "../../../reducer/Ticket";

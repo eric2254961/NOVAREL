@@ -2,7 +2,7 @@ import React from 'react'
 import { Switch, Route } from "react-router-dom";
 import TicketListe from "./TicketListe";
 import {connect} from 'react-redux'
-import TraiterTicket from "./traiter";
+import TraiterTicket from "./TicketTraiter";
 import TicketNouveau from "./TicketNouveau";
 
 function TicketPage(props){

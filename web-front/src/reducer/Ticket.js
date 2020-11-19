@@ -4,7 +4,7 @@ import { SubmissionError } from 'redux-form'
 import { CALL_HISTORY_METHOD, LOCATION_CHANGE, push } from "connected-react-router"  
 
 const TICKET_NEW = "TICKET_NEW"
-const TICKET_ADD = "TICKET_ADD"
+const TICKET_DETAILS = "TICKET_DETAILS"
 const TICKET_LIST = "TICKET_LIST"
 const CLIENT_DETAILS = "CLIENT_DETAILS"
 
@@ -31,6 +31,10 @@ export function AddNewTicket(values){
     }
 }
 
+export function AddActionTicket(values){
+
+}
+
 export function getDataForNew(idClient){
     return dispatch => {
         axios.get(`/commercial/tickets/GetDataForNewTicket/${idClient}`)
@@ -51,10 +55,35 @@ export function getDataForNew(idClient){
     }
 }
 
+export function getTicketDetails(reference){
+    return dispatch => {
+        axios.get(`/commercial/tickets/GetTicketDetails/${reference}`)
+            .then((response) => {
+                dispatch({
+                    type: TICKET_DETAILS,
+                    payload: response.data.Ticket
+                })
+                dispatch({
+                    type: CLIENT_DETAILS,
+                    payload: response.data.Client
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+                showNotification(NotificationType.ERROR, "Une erreur s'est produite. Impossible de charger les détails du ticket.")
+            })
+    }
+}
+
 const initialState = { context: {openMode : [], subject: []}, liste: [], localisation: {zones : [], emplacements: []} };
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case TICKET_NEW :
+            return {
+                ...state,
+                context: action.payload
+            }
+        case TICKET_DETAILS :
             return {
                 ...state,
                 context: action.payload
@@ -67,7 +96,9 @@ export const reducer = (state = initialState, action) => {
 const TicketRx = {
     reducer : reducer,
     getNew : getDataForNew,
-    addNew : AddNewTicket
+    addNew : AddNewTicket,
+    details : getTicketDetails,
+    addAction : AddActionTicket,
 }
 
 export default TicketRx;

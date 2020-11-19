@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using web_api.Models;
 using web_api.Models.Dto.Commercial;
-using web_api.Models.Dto.Pont;
+using web_api.Models.ViewModel;
 using web_api.Validator.Commercial.Ticket;
 
 namespace web_api.Services
@@ -13,11 +14,11 @@ namespace web_api.Services
     {
         public TicketsService(NovarelContext context) : base(context) { }
 
-        public async Task<Ticket> GetTicketWithDetails(string Reference)
+        public TicketObjetViewModel GetTicketWithDetails(string Reference)
         {
+            var objets = _context.ObjetTickets.Where( ot => ot.Ticket.Reference == Reference).Select(s => s.Objet).ToList();
             var ticket = _context.Tickets.Where(t => t.Reference == Reference).FirstOrDefault();
-            ticket.ObjetTickets.Where(ob => ob.TicketId == ticket.Id).ToList();
-            ticket.Actions.Where(a => a.Ticket.Id == ticket.Id).ToList();
+            return new TicketObjetViewModel { Ticket = ticket, Objets = objets };
         }
 
         public async Task<Ticket> AddNewticket(TicketValidator rawInput)
