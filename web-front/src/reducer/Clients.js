@@ -38,7 +38,7 @@ export function getClientDetails(id){
 }
 
 
-const initialState = { liste : [] };
+const initialState = { liste : [], selected : null };
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case CLIENT_SEARCH :
