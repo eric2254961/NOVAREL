@@ -429,7 +429,7 @@ namespace web_api.Migrations
             modelBuilder.Entity("web_api.Models.Dto.Commercial.ActionTicket", b =>
                 {
                     b.HasOne("web_api.Models.Dto.Commercial.Ticket", "Ticket")
-                        .WithMany()
+                        .WithMany("Actions")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
