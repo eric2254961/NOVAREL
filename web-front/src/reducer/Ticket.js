@@ -19,7 +19,7 @@ export function AddNewTicket(values){
                     type: NotificationType.SUCCESS
                 }
             })
-            return `/commercial/ticket/${response.data.Ticket.Reference}/traiter`
+            return `/commercial/ticket/${response.data.Reference}/traiter`
         })
         .catch((error) => {
             var obj = {};
@@ -61,11 +61,7 @@ export function getTicketDetails(reference){
             .then((response) => {
                 dispatch({
                     type: TICKET_DETAILS,
-                    payload: response.data.Ticket
-                })
-                dispatch({
-                    type: CLIENT_DETAILS,
-                    payload: response.data.Client
+                    payload: response.data
                 })
             })
             .catch((error) => {
@@ -75,7 +71,7 @@ export function getTicketDetails(reference){
     }
 }
 
-const initialState = { context: {openMode : [], subject: []}, liste: [], localisation: {zones : [], emplacements: []} };
+const initialState = { details: {Ticket: null}, context: {openMode : [], subject: []}, liste: [], localisation: {zones : [], emplacements: []} };
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case TICKET_NEW :
@@ -86,7 +82,7 @@ export const reducer = (state = initialState, action) => {
         case TICKET_DETAILS :
             return {
                 ...state,
-                context: action.payload
+                details: action.payload
             }
         default :
             return {...state}
