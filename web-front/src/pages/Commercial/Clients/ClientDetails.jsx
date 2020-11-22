@@ -257,7 +257,6 @@ function CustomerSubscription(props){
               <td>{item.TAG_ID}</td>
               <td>{item.TAG_TYPE === "9" ? "RFID " : "DSRC "}</td>
               <td>{getStatusToString(item.STATUS)}</td>
-              {let dhms = new Date(2000,02,12,20,52)}
               <td>{item.LM_DHMS}</td>
             </tr>
             )
