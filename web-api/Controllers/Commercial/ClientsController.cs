@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using web_api.Models.Auth;
+using web_api.Models.ViewModel;
 using web_api.Services;
 
 namespace web_api.Controllers.Commercial
@@ -28,7 +29,7 @@ namespace web_api.Controllers.Commercial
 
         [HttpGet("{IdClient}")]
         [Authorize(Policy = Policies.Commercial)]
-        public async Task<ContentResult> ClientGeaDetails(String IdClient)
+        public async Task<ContentResult> ClientGeaDetails(string IdClient)
         {
             var clientService = new ClientGeaService();
             var subscriptions = await clientService.GetSubscriptionAndTagCustomerAsync(IdClient);
@@ -37,6 +38,17 @@ namespace web_api.Controllers.Commercial
             customer.PAYLOAD.SUBSCRIPTIONS = subscriptions.PAYLOAD;
             string json = JsonConvert.SerializeObject(customer.PAYLOAD);
 
+            return Content(json, MediaTypeHeaderValue.Parse("application/json"));
+        }
+
+        [HttpGet("{IdAbonnement}")]
+        [Authorize(Policy = Policies.Commercial)]
+        public async Task<ContentResult> ClientGeaHistorique(string IdAbonnement)
+        {
+            var clientService = new ClientGeaService();
+            var historiques = await clientService.GetSubscriptionHistory(IdAbonnement);
+
+            string json = JsonConvert.SerializeObject(historiques.PAYLOAD);
             return Content(json, MediaTypeHeaderValue.Parse("application/json"));
         }
     }

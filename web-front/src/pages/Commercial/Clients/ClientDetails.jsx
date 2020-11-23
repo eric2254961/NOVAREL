@@ -1,4 +1,4 @@
-import { MenuItem, TextField } from '@material-ui/core';
+import { Button, Dialog, DialogContent, DialogTitle, MenuItem, TextField } from '@material-ui/core';
 import React,{ useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router';
@@ -47,9 +47,13 @@ function ClientDetails(props)
                 <br/>
                 <h4>Abonnements</h4>
                 <hr/>
-                <CustomerSubscription abonnements={props.client.SUBSCRIPTIONS} />
+                <CustomerSubscription 
+                  abonnements={props.client.SUBSCRIPTIONS} 
+                  getHistorique={props.getHisto} 
+                  historiques={props.historique}
+                />
               </div>
-              <d className="tab-pane" id="tickets">
+              <div className="tab-pane" id="tickets">
                 <table className="table">
                   <tbody>
                     <tr>
@@ -115,7 +119,7 @@ function ClientDetails(props)
                     </tr>
                   </tbody>
                 </table>
-              </d>
+              </div>
             </div>
           </div>
         </div>
@@ -217,7 +221,7 @@ function CustomerDetails (props){
 
 function CustomerSubscription(props){
 
-  let {abonnements} = props
+  let {abonnements, historiques} = props
   let [abonnementActif, setAbonnementActif] = useState(0)
 
   return (
@@ -236,7 +240,13 @@ function CustomerSubscription(props){
             {abonnements.map((item,k) => { return <MenuItem key={k} value={k}>{item.SUBS_ID}</MenuItem> })}
           </TextField>
         </div>
-        <div className="col-md-2"></div>
+        <div className="col-md-2">
+          <HistoriqueDialog 
+            abonnementId={abonnements[abonnementActif].SUBS_ID} 
+            getHistorique={props.getHistorique} 
+            historiques={historiques}
+          />
+        </div>
       </div>
       <br/>
       <div className="row">
@@ -269,15 +279,83 @@ function CustomerSubscription(props){
   )
 }
 
-//Date(year, month, day, hours, minutes, seconds, milliseconds)
+function HistoriqueDialog(props){
+  let { abonnementId, getHistorique, historiques } = props
+  const [open, setOpen] = React.useState(false);
+
+  useEffect(() => {
+    getHistorique(abonnementId)
+  }, [open])
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <React.Fragment>
+      <Button color="primary" onClick={handleClickOpen}> Historique </Button>
+      <Dialog
+        open={open}
+        keepMounted
+        fullWidth
+        maxWidth={'lg'}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+      <DialogTitle id="alert-dialog-slide-title">Historique client</DialogTitle>
+        <DialogContent>
+          <table className="table">
+            <thead>
+            <tr>
+              <td width="4%" align="center"><b>Site</b></td>
+              <td width="7%" align="center"><b>Voie(X/S)</b></td>
+              <td width="20%" align="center"><b>Nom</b></td>
+              <td width="17%" align="center"><b>Date</b></td>
+              <td width="20%" align="center"><b>Opération</b></td>
+              <td width="8%" align="center"><b>Montant (*)</b></td>
+              <td width="8%" align="center"><b>Bal Var.</b></td>
+              <td width="8%" align="center"><b>Balance Avant</b></td>
+              <td width="8%" align="center"><b>Badge</b></td>
+            </tr>
+            </thead>
+            <tbody>
+            {historiques.map( (item, k) => {
+              return (
+              <tr key={k}>
+                <td>{ item.PLAZA }</td>
+                <td>{ item.LANE }</td>
+                <td>{ item.PLAZA }</td>
+                <td>{ item.DHMS }</td>
+                <td>{ item.OPERATION }</td>
+                <td class="amount">{ item.AMOUNT }</td>
+                <td class="amount">{ item.BALANCE }</td>
+                <td class="amount">{ item.BALANCE_BEFORE }</td>
+                <td>{ item.MEDIA }</td>
+              </tr> )
+            })}
+            </tbody>
+          </table>
+        </DialogContent>
+      </Dialog>
+      </React.Fragment>
+  )
+}
 
 const getDetails = ClientRx.details
+const getHisto = ClientRx.historique
+
 const mapDispatchToProps = {
-  getDetails
+  getDetails, getHisto
 }
 const mapStateToProps = store => {
   return {
-    client: store.clients.selected
+    client: store.clients.selected,
+    historique: store.clients.historique
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps) (ClientDetails);

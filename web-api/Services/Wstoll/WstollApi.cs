@@ -66,7 +66,18 @@ namespace web_api.Services.Wstoll
 
             HttpResponseMessage result = await browser.SendAsync(request).ConfigureAwait(false);
 
-            return await result.Content.ReadAsStringAsync().ConfigureAwait(false);      
+            return await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+        }
+
+        public async Task<string> GetSubscriptionHistoryAsync(string IdAbonnement)
+        {
+            browser.DefaultRequestHeaders.Add("Authorization", "Bearer " + GetToken(WstollAction.GET_SUBSCRIPTIONS_HISTORY));
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, string.Format("/api/wstoll/subscriptions/{0}/history", IdAbonnement));
+            request.Content = new StringContent(string.Empty, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage result = await browser.SendAsync(request).ConfigureAwait(false);
+
+            return await result.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
     }
 }

@@ -3,6 +3,7 @@ import {showNotification, NotificationType} from "./Notification";
 
 const CLIENT_SEARCH = "CLIENT_SEARCH"
 const CLIENT_DETAILS = "CLIENT_DETAILS"
+const CLIENT_HISTO = "CLIENT_HISTO"
 
 export function searchClient(subject){
     return dispatch => {
@@ -20,11 +21,11 @@ export function searchClient(subject){
             })
     }
 }
+
 export function getClientDetails(id){
     return dispatch => {
         axios.get(`/commercial/clients/ClientGeaDetails/${id}`)
             .then((response) => {
-                console.log(response)
                 dispatch({
                     type: CLIENT_DETAILS,
                     payload: response.data
@@ -38,7 +39,23 @@ export function getClientDetails(id){
 }
 
 
-const initialState = { liste : [], selected : null };
+export function getClientHistorique(abonnemenId){
+    return dispatch => {
+        axios.get(`/commercial/clients/ClientGeaHistorique/${abonnemenId}`)
+            .then((response) => {
+                dispatch({
+                    type: CLIENT_HISTO,
+                    payload: response.data
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+                showNotification(NotificationType.ERROR, "Une erreur s'est produite. Impossible de charger les détails du client.")
+            })
+    }
+}
+
+const initialState = { liste : [], selected : null, historique: [] };
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case CLIENT_SEARCH :
@@ -51,6 +68,11 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 selected: action.payload
             }
+        case CLIENT_HISTO :
+            return {
+                ...state,
+                historique: action.payload
+            }
         default :
             return {...state}
     }
@@ -59,7 +81,8 @@ export const reducer = (state = initialState, action) => {
 const ClientRx = {
     reducer : reducer,
     search : searchClient,
-    details: getClientDetails
+    details: getClientDetails,
+    historique: getClientHistorique
 }
 
 export default ClientRx;
