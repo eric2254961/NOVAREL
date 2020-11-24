@@ -43,10 +43,7 @@ export function getDataForNew(idClient){
                     type: TICKET_NEW,
                     payload: response.data
                 })
-                dispatch({
-                    type: CLIENT_DETAILS,
-                    payload: response.data.Client
-                })
+                console.log(response.data)
             })
             .catch((error) => {
                 console.log(error)

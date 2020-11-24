@@ -38,6 +38,21 @@ export function getClientDetails(id){
     }
 }
 
+export function getClientDetailsAndTickets(id){
+    return dispatch => {
+        axios.get(`/commercial/clients/ClientGeaDetailsWithTickets/${id}`)
+            .then((response) => {
+                dispatch({
+                    type: CLIENT_DETAILS,
+                    payload: response.data
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+                showNotification(NotificationType.ERROR, "Une erreur s'est produite. Impossible de charger les détails du client.")
+            })
+    }
+}
 
 export function getClientHistorique(abonnemenId){
     return dispatch => {
@@ -55,7 +70,7 @@ export function getClientHistorique(abonnemenId){
     }
 }
 
-const initialState = { liste : [], selected : null, historique: [] };
+const initialState = { liste : [], selected : {Details: null, Ticket: null}, historique: [] };
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case CLIENT_SEARCH :
@@ -82,6 +97,7 @@ const ClientRx = {
     reducer : reducer,
     search : searchClient,
     details: getClientDetails,
+    detailsAndTickets: getClientDetailsAndTickets,
     historique: getClientHistorique
 }
 

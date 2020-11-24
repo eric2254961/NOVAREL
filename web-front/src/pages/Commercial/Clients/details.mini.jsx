@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 function DetailsMiniCLient(props){
     const { client } = props
+    console.log("client", client)
 
     const [ indexAbonnement, setIndexAbonnement ] = useState(0)
     const useStyles = makeStyles((theme) => ({

@@ -21,6 +21,23 @@ namespace web_api.Services
             return new TicketObjetViewModel { Ticket = ticket, Objets = objets };
         }
 
+        public async Task<List<Ticket>> ListTicketsByCustomer(string IdClient)
+        {
+            return await _context.Tickets.Where(t => t.ClientId == IdClient)
+                .OrderByDescending(t => t.DateOuverture)
+                .Select(t => new Ticket{ 
+                    Reference = t.Reference, 
+                    IsCloture = t.IsCloture,
+                    DateOuverture = t.DateOuverture,
+                    ObjetTickets = t.ObjetTickets
+                                    .Where( ot => ot.Ticket.Reference == t.Reference)
+                                    .Select(ob => new ObjetTicket {
+                                        Objet = ob.Objet
+                                    })
+                                    .ToList()
+                }).ToListAsync();
+        }
+
         public async Task<Ticket> AddNewticket(TicketValidator rawInput)
         {
             var ticket = new Ticket();

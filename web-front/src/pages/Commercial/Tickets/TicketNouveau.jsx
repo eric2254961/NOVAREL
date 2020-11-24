@@ -37,7 +37,7 @@ function TicketNouveau(props){
           <NewTicket initialValues={initialValues} onSubmit={handleSubmit} data={props.context}/>
         </div>
         <div className="col-md-4">
-          <DetailsMiniCLient client={props.client} />
+          <DetailsMiniCLient client={props.context.Client} />
         </div>
       </React.Fragment> :
       <Redirect to={urlSuccess} />
@@ -48,7 +48,6 @@ function TicketNouveau(props){
 
 const mapStateToProps = store =>  {
   return {
-    client: store.clients.selected,
     context: store.tickets.context
   }
 }
