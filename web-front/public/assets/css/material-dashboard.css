@@ -18066,7 +18066,7 @@ html[dir="rtl"] .form-check .form-check-sign .check:before {
 }
 
 .card-stats .card-body {
-  text-align: right;
+  text-align: left;
 }
 
 .card-profile {

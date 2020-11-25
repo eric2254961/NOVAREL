@@ -87,7 +87,7 @@ namespace web_api.Controllers.Commercial
             var customer = await clientService.GetCustomerByIdentityAsync(ticketObjets.Ticket.ClientId);
             customer.PAYLOAD.SUBSCRIPTIONS = subscriptions.PAYLOAD;
 
-            var context = new TicketTraitementViewModel { Ticket = ticketObjets.Ticket, Objets = ticketObjets.Objets, Client = customer };
+            var context = new TicketTraitementViewModel { Ticket = ticketObjets.Ticket, Objets = ticketObjets.Objets, Client = customer.PAYLOAD };
 
             return Content(JsonConvert.SerializeObject(context), MediaTypeHeaderValue.Parse("application/json"));
         }

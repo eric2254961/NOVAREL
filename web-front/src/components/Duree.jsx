@@ -2,6 +2,7 @@ import React from 'react'
 import PropType from 'prop-types'
 import { defaultFormat } from 'moment';
 
+
 function Duree(props){
 
   let {date} = props
@@ -19,7 +20,7 @@ function Duree(props){
       else /*  plus de 3 heures ont affiche ajourd'hui à HH:MM:SS */
         duree = 'Aujourd\'hui à '+ date.getHours()+":"+date.getMinutes();
   }else if(date.getFullYear() === now.getFullYear() && now.getMonth() === date.getMonth()){
-    duree = 'Il y a '+ (now.getDate() - date.getDate()) + ' jour(s)' 
+    duree = 'Il y a '+ ((now.getDate() - date.getDate())+1) + ' jour(s)' 
   }else if (now.getFullYear() === date.getFullYear()){
     duree = 'Il y a '+ (now.getMonth() - date.getMonth()) + ' mois' 
   }else{

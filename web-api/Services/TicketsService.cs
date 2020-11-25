@@ -17,7 +17,11 @@ namespace web_api.Services
         public TicketObjetViewModel GetTicketWithDetails(string Reference)
         {
             var objets = _context.ObjetTickets.Where( ot => ot.Ticket.Reference == Reference).Select(s => s.Objet).ToList();
-            var ticket = _context.Tickets.Where(t => t.Reference == Reference).FirstOrDefault();
+            var ticket = _context.Tickets.Where(t => t.Reference == Reference)
+                                         .Include(t => t.Emplacement)
+                                         .ThenInclude(e => e.Zone)
+                                         .Include(t => t.ModeOuverture)
+                                         .FirstOrDefault();
             return new TicketObjetViewModel { Ticket = ticket, Objets = objets };
         }
 

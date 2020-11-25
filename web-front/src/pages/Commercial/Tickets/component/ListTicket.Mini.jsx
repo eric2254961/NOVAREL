@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import ParseDate from '../../../../components/ParseDate'
 
 function TicketListMini(props){
@@ -28,7 +29,9 @@ function TicketListMini(props){
               <td><span className={`ticket-status ${item.IsCloture? 'ticket-cloture':'ticket-encours' }`}> </span></td>
               <td className="td-actions text-right">
                 <button type="button" rel="tooltip" title="Edit Task" className="btn btn-primary btn-link btn-sm">
-                  <i className="material-icons">edit</i>
+                  <Link to={`/commercial/ticket/${item.Reference}/traiter`}>
+                    <i className="material-icons">edit </i>
+                  </Link>
                 </button>
               </td>
             </tr> )
