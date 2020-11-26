@@ -82,7 +82,7 @@ function TraiterTicket(props){
                     </div>
                     <div className="card-footer">
                         <hr/>
-                        <ActionTraitement />
+                        <ActionTraitement reference={Ticket.Reference} />
                     </div>
                 </div>
             </div>
@@ -141,10 +141,12 @@ function TicketClientInfos(props){
     )
 }
 
-function ActionTraitement(){
+function ActionTraitement(props){
+
+    const {reference} = props
     return (
         <React.Fragment>
-            <ActionTicket/>
+            <ActionTicket reference={reference}/>
             <div className="stats">
                 <i className="material-icons text-warning">arrow_forward</i>
                 <a className="text-warning" href="#1">Transférer</a>

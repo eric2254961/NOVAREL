@@ -57,6 +57,23 @@ namespace web_api.Controllers.Commercial
 
         [HttpPost]
         [Authorize(Policy = Policies.Commercial)]
+        public async Task<StatusCodeResult> AddNewAction([FromBody] ActionTicketValidator input)
+        {
+            if (ModelState.IsValid)
+            {
+                var actionService = new ActionTicketService(this._context);
+                var action = await actionService.AddNewAction(input);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
+        }
+
+        [HttpPost]
+        [Authorize(Policy = Policies.Commercial)]
         public async Task<ContentResult> AddNewTicket([FromBody] TicketValidator input)
         {
             Object context = new { Type = 1, Message = "" , Reference = ""};
