@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using web_api.Models.Auth;
 using web_api.Models.Dto;
 using web_api.Models.Dto.Commercial;
 using web_api.Models.Dto.Organisation;
@@ -80,6 +81,11 @@ namespace web_api.Models
              new Service { Id = 2, Libelle = "Viabilite" },
              new Service { Id = 3, Libelle = "Informatique" },
              new Service { Id = 4, Libelle = "Direction" }
+            );
+            modelBuilder.Entity<Utilisateur>().HasData(
+                new {Id = 1, Email = "admin@pont-hkb.com", Name = "Administrateur", Status = "A", ServiceId = 3, Password = Authenticate.HashPassword("azerty")},
+                new {Id = 2, Email = "commercial@pont-hkb.com", Name = "Commercial", Status = "A", ServiceId = 1, Password = Authenticate.HashPassword("azerty") },
+                new {Id = 3, Email = "viabilite@pont-hkb.com", Name = "Viablite", Status = "A", ServiceId = 2, Password = Authenticate.HashPassword("azerty") }
             );
             modelBuilder.Entity<ModeOuverture>().HasData(
              new ModeOuverture { Id = 1, Libelle = "Email" },

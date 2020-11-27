@@ -1,6 +1,7 @@
 const AUTH_LOGIN = "AUTH_LOGIN";
 
 export function handleLogin(userDto){
+  console.log("User login", userDto)
   return dispatch => {
     dispatch({
       type: AUTH_LOGIN,

@@ -1,21 +1,25 @@
 import axios from "axios";
 
 const token = localStorage.getItem("NVL_TK");
-//const dispatch = useDispatch()
 
 // Add a request interceptor
 axios.interceptors.request.use(
   config => {
     console.log("sarting web request")
-    //dispatch({ type: LoadingBarRx.EventShow })
+
+    console.log("Configuration Axios",config)
+
+    if(config.method === "post"){
+
+    }
 
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token;
     }
     config.headers['Content-Type'] = 'application/json';
     config.headers['Access-Control-Allow-Origin'] = '*';
-    config.baseURL = "https://localhost:5001/api";
-    //config.baseURL = "https://localhost:44328/api"
+    //config.baseURL = "https://localhost:5001/api";
+    config.baseURL = "https://localhost:44328/api"
     return config;
   },
   error => {
@@ -26,12 +30,10 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (response) => {
     console.log("request success   response")
-    //dispatch({ type: LoadingBarRx.EventHide })
     return response
   },
   (error) => {
     console.log("request error response")
-    //dispatch({ type: LoadingBarRx.EventHide })
 
     const originalRequest = error.config;
 

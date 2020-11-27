@@ -8,8 +8,8 @@ function Authenticator (props){
   let history = useHistory();
 
   let query = useQuery();
-
-  if(query.get("token") == null){
+  let token = query.get("token")
+  if(token == null){
     document.location.href = props.loginUrl;
   }
 
