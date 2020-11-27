@@ -111,12 +111,11 @@ body {
 <body>
     <div class="login-page">
         <div class="form">
-            <form class="login-form" method="post" action="/test">
+            <form class="login-form" method="post" action="HandleAuthentication">
                 @Html.AntiForgeryToken()
-                <input type="text" name="Name" placeholder="username" />
-                <input type="password" name="Password" placeholder="password" />
-                <button>login</button>
-                <p class="message">Not registered? <a href="#">Create an account</a></p>
+                <input type="text" name="Email" placeholder="Email" />
+                <input type="password" name="Password" placeholder="Mot de passe" />
+                <button>Login</button>
             </form>
         </div>
     </div>

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using web_api.Exceptions;
 using web_api.Models.Dto;
 using web_api.Models.Dto.Organisation;
 
@@ -11,31 +15,42 @@ namespace web_api.Models.Auth
 {
     public class Authenticate
     {
-        //NovarelContext _context;
-        Utilisateur demo = new Utilisateur
-        {
-            Email = "demon@pont-hkb.com",
-            Id = 1,
-            Name = "Demo Auth NOVAREL",
-            Password = "azerty",
-            Status = "100",
-            RemenberToken = "jhdsgdhhghfjgdfdfjhfgfhfgf",
-            Service = new Service { Id = 1, Libelle = "Commercial" }
-        };
+        string secretKey;
+        NovarelContext _context;
 
-        String secretKey;
-
-        public Authenticate()
+        public Authenticate(NovarelContext context)
         {
             this.secretKey = Startup.Configuration["Jwt:SecretKey"];
-            //_context = new NovarelContext();
+            this._context = context;
         }
 
         public Utilisateur AuthenticateUser(Utilisateur loginCredentials)
         {
-            //Utilisateur user = _context.Utilisateurs
-            //    .SingleOrDefault(x => x.Email == loginCredentials.Email && x.Password == loginCredentials.Password);
-            return demo;
+            Utilisateur user = _context.Utilisateurs.Where(u => u.Email == loginCredentials.Email)
+                                                    .Include(u => u.Service)
+                                                    .FirstOrDefault();
+
+            if (user != null)
+            {
+                if(user.Password == HashPassword(loginCredentials.Password))
+                {
+                    return user;
+                }
+                throw new NovarelSecurityException("Mot de passe incorrect");
+            }
+            throw new NovarelSecurityException("Login incorrect");
+        }
+
+        public static string HashPassword(string password)
+        {
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: password,
+                salt: Encoding.UTF8.GetBytes(Startup.Configuration["Jwt:SecretKey"]),
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8)
+            );
+            return hashed;
         }
 
         public string GenerateJWTToken(Utilisateur userInfo, String issuer, String audience)

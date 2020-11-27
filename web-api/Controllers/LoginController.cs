@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using web_api.Models;
 using web_api.Models.Auth;
 using web_api.Models.Dto;
 using web_api.Models.Dto.Organisation;
@@ -16,19 +17,21 @@ using web_api.Models.Dto.Organisation;
 
 namespace web_api.Controllers
 {
-    [Controller]    
+    [Route("auth/[controller]/[action]")]
+    [Controller]
     public class LoginController : Controller
     {
         private readonly IConfiguration _config;
+        private readonly NovarelContext _context;
 
-        public LoginController(IConfiguration config)
+        public LoginController(IConfiguration config, NovarelContext context)
         {
             _config = config;
+            _context = context;
         }
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("/login")]
         public IActionResult Index()
         {
             return View();
@@ -38,19 +41,20 @@ namespace web_api.Controllers
         [Route("api/auth/token")]
         public JsonResult RefreshToken([FromBody] Object item)
         {
-            var authenticate = new Authenticate();
+            var authenticate = new Authenticate(this._context);
             var user = new Utilisateur();
 
-            return Json(new RefreshToken{ token = GenerateToken(authenticate, authenticate.AuthenticateUser(user)) });
+            return Json(new RefreshToken { token = GenerateToken(authenticate, authenticate.AuthenticateUser(user)) });
         }
-        
+
         [AllowAnonymous]
-        [HttpPost]
-        [Route("/test")]
-        public IActionResult Auth()
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult HandleAuthentication(string Email, string Password )
         {
             Utilisateur credential = new Utilisateur();
-            Authenticate authenticate = new Authenticate();
+            credential.Email = Email;
+            credential.Password = Password;
+            Authenticate authenticate = new Authenticate(this._context);
 
             IActionResult response = Unauthorized();
             Utilisateur user = authenticate.AuthenticateUser(credential);
@@ -58,8 +62,9 @@ namespace web_api.Controllers
             if (user != null)
             {
                 var tokenString = GenerateToken(authenticate, user);
+                user.Password = string.Empty;
 
-                response = Redirect(_config["webFront:successUrl"] + "token=" + tokenString + "&user=" + JsonConvert.SerializeObject(user));
+                response = Redirect($"{_config["webFront:successUrl"]}token={tokenString}&user={JsonConvert.SerializeObject(user)}");
             }
 
             return response;

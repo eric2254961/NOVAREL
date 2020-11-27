@@ -16,7 +16,7 @@ const store = configureStore(history);
 ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <App loginUrl="https://localhost:44328/login" />
+            <App loginUrl="https://localhost:44328/auth/Login/Index" />
         </ConnectedRouter>
     </Provider>,
     document.getElementById('root')

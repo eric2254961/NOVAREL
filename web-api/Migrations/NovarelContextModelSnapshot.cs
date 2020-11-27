@@ -211,17 +211,52 @@ namespace web_api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RemenberToken")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ServiceId");
+
                     b.ToTable("Utilisateurs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "admin@pont-hkb.com",
+                            Name = "Administrateur",
+                            Password = "hH/qH+78aR/TKtgWQtvnBO8faQ0zzkxNzsiB+aL2sUA=",
+                            ServiceId = 3,
+                            Status = "A"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "commercial@pont-hkb.com",
+                            Name = "Commercial",
+                            Password = "hH/qH+78aR/TKtgWQtvnBO8faQ0zzkxNzsiB+aL2sUA=",
+                            ServiceId = 1,
+                            Status = "A"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "viabilite@pont-hkb.com",
+                            Name = "Viablite",
+                            Password = "hH/qH+78aR/TKtgWQtvnBO8faQ0zzkxNzsiB+aL2sUA=",
+                            ServiceId = 2,
+                            Status = "A"
+                        });
                 });
 
             modelBuilder.Entity("web_api.Models.Dto.Pont.Emplacement", b =>
@@ -467,6 +502,15 @@ namespace web_api.Migrations
                     b.HasOne("web_api.Models.Dto.Commercial.ModeOuverture", "ModeOuverture")
                         .WithMany()
                         .HasForeignKey("ModeOuvertureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("web_api.Models.Dto.Organisation.Utilisateur", b =>
+                {
+                    b.HasOne("web_api.Models.Dto.Organisation.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
