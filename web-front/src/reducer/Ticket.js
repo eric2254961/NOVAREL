@@ -32,7 +32,26 @@ export function AddNewTicket(values){
 }
 
 export function AddActionTicket(values){
-
+    return dispatch => {
+        return axios.post('/commercial/tickets/AddNewAction', values)
+        .then((response) => {
+            dispatch({
+                type: "NOTIFICATION_SHOW",
+                payload: {
+                    message: response.data.Message,
+                    type: NotificationType.SUCCESS
+                }
+            })
+            return true
+        })
+        .catch((error) => {
+            var obj = {};
+            for(var element in error.response.data.errors){
+                obj[element] = error.response.data.errors[element][0]
+            }
+            throw new SubmissionError(obj)
+        })
+    }
 }
 
 export function getDataForNew(idClient){
