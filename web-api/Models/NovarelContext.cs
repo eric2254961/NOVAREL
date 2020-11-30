@@ -77,10 +77,10 @@ namespace web_api.Models
              new Objet { Id = 8, Libelle = "Autres objets", Module = TypeObjet.Commercial }
             );
             modelBuilder.Entity<Service>().HasData(
-             new Service { Id = 1, Libelle = "Commercial" },
-             new Service { Id = 2, Libelle = "Viabilite" },
-             new Service { Id = 3, Libelle = "Informatique" },
-             new Service { Id = 4, Libelle = "Direction" }
+             new Service { Id = 1, Libelle = Service.COMMERCIAL },
+             new Service { Id = 2, Libelle = Service.VIABILITE },
+             new Service { Id = 3, Libelle = Service.INFORMATIQUE },
+             new Service { Id = 4, Libelle = Service.DIRECTION }
             );
             modelBuilder.Entity<Utilisateur>().HasData(
                 new {Id = 1, Email = "admin@pont-hkb.com", Name = "Administrateur", Status = "A", ServiceId = 3, Password = Authenticate.HashPassword("azerty")},

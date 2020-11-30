@@ -14,6 +14,7 @@ function Authenticator (props){
   }
 
   localStorage.setItem("NVL_TK",query.get("token"));
+  localStorage.setItem("user",query.get("user"));
   props.handleLogin(JSON.parse(query.get("user")));
 
   history.push("/");

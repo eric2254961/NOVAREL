@@ -9,6 +9,7 @@ using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using web_api.Models;
 using web_api.Models.Auth;
+using web_api.Models.Dto.Organisation;
 using web_api.Models.ViewModel;
 using web_api.Services;
 
@@ -26,7 +27,7 @@ namespace web_api.Controllers.Commercial
         }
 
         [HttpGet]
-        [Authorize(Policy = Policies.Commercial)]
+        [Authorize(Policy = Service.COMMERCIAL)]
         public async Task<ContentResult> SearchGeaClient([FromQuery]String subject)
         {
             var clientService = new ClientGeaService();
@@ -36,11 +37,10 @@ namespace web_api.Controllers.Commercial
         }
 
         [HttpGet("{IdClient}")]
-        [Authorize(Policy = Policies.Commercial)]
+        [Authorize(Policy = Service.COMMERCIAL)]
         public async Task<ContentResult> ClientGeaDetails(string IdClient)
         {
             var clientService = new ClientGeaService();
-            var ticketService = new TicketsService(this._context);
             var subscriptions = await clientService.GetSubscriptionAndTagCustomerAsync(IdClient);
             var customer      = await clientService.GetCustomerByIdentityAsync(IdClient);
 
@@ -51,14 +51,14 @@ namespace web_api.Controllers.Commercial
         }
 
         [HttpGet("{IdClient}")]
-        [Authorize(Policy = Policies.Commercial)]
+        [Authorize(Policy = Service.COMMERCIAL)]
         public async Task<ContentResult> ClientGeaDetailsWithTickets(string IdClient)
         {
             var clientService = new ClientGeaService();
             var ticketService = new TicketsService(this._context);
             var subscriptions = await clientService.GetSubscriptionAndTagCustomerAsync(IdClient);
             var customer = await clientService.GetCustomerByIdentityAsync(IdClient);
-            var tickets = await ticketService.ListTicketsByCustomer(IdClient);
+            var tickets  = await ticketService.ListTicketsByCustomer(IdClient);
 
             customer.PAYLOAD.SUBSCRIPTIONS = subscriptions.PAYLOAD;
             string json = JsonConvert.SerializeObject(new { Details = customer.PAYLOAD, Tickets = tickets });
@@ -67,7 +67,7 @@ namespace web_api.Controllers.Commercial
         }
 
         [HttpGet("{IdAbonnement}")]
-        [Authorize(Policy = Policies.Commercial)]
+        [Authorize(Policy = Service.COMMERCIAL)]
         public async Task<ContentResult> ClientGeaHistorique(string IdAbonnement)
         {
             var clientService = new ClientGeaService();

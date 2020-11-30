@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using web_api.Models.Auth;
+using web_api.Models.Dto.Organisation;
 using web_api.Services.Wstoll;
 
 namespace web_api.Controllers
@@ -17,7 +18,7 @@ namespace web_api.Controllers
     {
         [HttpGet]
         [Route("GetUserData")]
-        [Authorize(Policy = Policies.User)]
+        [Authorize(Policy = Service.COMMERCIAL)]
         public IActionResult GetUserData()
         {
             return Ok("This is a response from User method");
@@ -25,7 +26,7 @@ namespace web_api.Controllers
 
         [HttpGet]
         [Route("GetAdminData")]
-        [Authorize(Policy = Policies.Admin)]
+        [Authorize(Policy = Service.INFORMATIQUE)]
         public IActionResult GetAdminData()
         {
             return Ok("This is a response from Admin method");

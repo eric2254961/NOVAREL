@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using web_api.Models;
 using web_api.Models.Auth;
+using web_api.Models.Dto.Organisation;
 
 namespace web_api
 {
@@ -63,9 +64,10 @@ namespace web_api
 
             services.AddAuthorization(config =>
             {
-                config.AddPolicy(Policies.Admin, Policies.AdminPolicy());
-                config.AddPolicy(Policies.User, Policies.UserPolicy());
-                config.AddPolicy(Policies.Commercial, Policies.CommercialPolicy());
+                config.AddPolicy(Service.INFORMATIQUE, Policies.AdminPolicy());
+                config.AddPolicy(Service.VIABILITE, Policies.ViabilitePolicy());
+                config.AddPolicy(Service.COMMERCIAL, Policies.CommercialPolicy());
+                config.AddPolicy(Service.DIRECTION, Policies.DirectionPolicy());
             });
 
             services.AddHttpClient();

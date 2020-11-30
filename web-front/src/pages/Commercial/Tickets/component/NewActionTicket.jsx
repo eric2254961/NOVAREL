@@ -55,7 +55,7 @@ function ActionForm (props){
   let {handleSubmit} = props
   return (
     <form onSubmit={handleSubmit}>
-       <hr/>
+      <hr/>
       <h4>Commentaire</h4>
       <div className="row">
         <div className="col-md-12">

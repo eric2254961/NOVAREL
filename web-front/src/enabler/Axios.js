@@ -8,9 +8,12 @@ axios.interceptors.request.use(
     console.log("sarting web request")
 
     console.log("Configuration Axios",config)
-
-    if(config.method === "post"){
-
+    
+    if(config.method === "post"){      
+      let userRaw = localStorage.getItem("user")
+      let user = JSON.parse(userRaw);
+      //data: "{"clientGeaId":"000000036505","datetime":"30/11/2020 22:59"}"
+      config.data = {...config.data, UtilisateurId: user.Id}
     }
 
     if (token) {
@@ -18,8 +21,8 @@ axios.interceptors.request.use(
     }
     config.headers['Content-Type'] = 'application/json';
     config.headers['Access-Control-Allow-Origin'] = '*';
-    //config.baseURL = "https://localhost:5001/api";
     config.baseURL = "https://localhost:44328/api"
+    //config.baseURL = "https://localhost:5001/api";
     return config;
   },
   error => {

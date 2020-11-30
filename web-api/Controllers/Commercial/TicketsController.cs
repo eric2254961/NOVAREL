@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using web_api.Models;
 using web_api.Models.Auth;
 using web_api.Models.Dto.Commercial;
+using web_api.Models.Dto.Organisation;
 using web_api.Models.ViewModel;
 using web_api.Services;
 using web_api.Validator.Commercial.Ticket;
@@ -32,7 +33,7 @@ namespace web_api.Controllers.Commercial
         }
 
         [HttpGet("{IdClient}")]
-        [Authorize(Policy = Policies.Commercial)]
+        [Authorize(Policy = Service.COMMERCIAL)]
         public async Task<ContentResult> GetDataForNewTicket(string IdClient)
         {
             EnablersService enablerService = new EnablersService(this._context);
@@ -56,7 +57,7 @@ namespace web_api.Controllers.Commercial
         }
 
         [HttpPost]
-        [Authorize(Policy = Policies.Commercial)]
+        [Authorize(Policy = Service.COMMERCIAL)]
         public async Task<StatusCodeResult> AddNewAction([FromBody] ActionTicketValidator input)
         {
             if (ModelState.IsValid)
@@ -73,7 +74,7 @@ namespace web_api.Controllers.Commercial
         }
 
         [HttpPost]
-        [Authorize(Policy = Policies.Commercial)]
+        [Authorize(Policy = Service.COMMERCIAL)]
         public async Task<ContentResult> AddNewTicket([FromBody] TicketValidator input)
         {
             Object context = new { Type = 1, Message = "" , Reference = ""};
@@ -93,7 +94,7 @@ namespace web_api.Controllers.Commercial
         }
 
         [HttpGet("{Reference}")]
-        [Authorize(Policy = Policies.Commercial)]
+        [Authorize(Policy = Service.COMMERCIAL)]
         public async Task<ContentResult> GetTicketDetails(string Reference)
         {
             var service = new TicketsService(_context);

@@ -7,7 +7,7 @@ function CustomerSubscription(props){
 
   let {abonnements, historiques} = props
   let [abonnementActif, setAbonnementActif] = useState(0)
-
+  console.log("Abonnement",abonnements.length)
   return (
     <React.Fragment>
       <div className="row">
@@ -25,16 +25,18 @@ function CustomerSubscription(props){
           </TextField>
         </div>
         <div className="col-md-2">
+          {abonnements.length > 0  &&
           <HistoriqueDialog 
             abonnementId={abonnements[abonnementActif].SUBS_ID} 
             getHistorique={props.getHistorique} 
             historiques={historiques}
-          />
+          />}
         </div>
       </div>
       <br/>
       <div className="row">
         <div className="col-md-12">
+        { abonnements.length > 0 && 
           <table className="table">
           <thead>
             <tr>
@@ -56,7 +58,7 @@ function CustomerSubscription(props){
             )
         })}          
           </tbody>
-          </table>        
+          </table> }       
         </div>
       </div>
     </React.Fragment>

@@ -8,6 +8,11 @@ namespace web_api.Models.Dto.Organisation
 {
     public class Service
     {
+        public const string VIABILITE = "Viabilite";
+        public const string COMMERCIAL = "Commercial";
+        public const string INFORMATIQUE = "Informatique";
+        public const string DIRECTION = "Direction";
+
         [Key]
         public int Id { get; set; }
         [Required]

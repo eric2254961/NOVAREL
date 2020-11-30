@@ -1,7 +1,6 @@
 import axios from "../enabler/Axios"
 import {showNotification, NotificationType} from "./Notification";
-import { SubmissionError } from 'redux-form'   
-import { CALL_HISTORY_METHOD, LOCATION_CHANGE, push } from "connected-react-router"  
+import { SubmissionError } from 'redux-form'  
 
 const TICKET_NEW = "TICKET_NEW"
 const TICKET_DETAILS = "TICKET_DETAILS"
@@ -26,6 +25,7 @@ export function AddNewTicket(values){
             for(var element in error.response.data.errors){
                 obj[element] = error.response.data.errors[element][0]
             }
+            console.log(obj)
             throw new SubmissionError(obj)
         })
     }

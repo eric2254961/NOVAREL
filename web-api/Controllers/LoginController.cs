@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using web_api.Exceptions;
 using web_api.Models;
 using web_api.Models.Auth;
 using web_api.Models.Dto;
@@ -34,6 +36,7 @@ namespace web_api.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            GetEmailCookies();
             return View();
         }
 
@@ -47,17 +50,50 @@ namespace web_api.Controllers
             return Json(new RefreshToken { token = GenerateToken(authenticate, authenticate.AuthenticateUser(user)) });
         }
 
+        private void AddEmailToCookies(string value)
+        {
+            var options = new CookieOptions { Expires = DateTime.Now.AddYears(1), Secure = true };
+            Response.Cookies.Append("Email", value, options);
+        }
+
+        private void GetEmailCookies()
+        {
+            var result = Request.Cookies["Email"];
+            if (result != null)
+            {
+                ViewData["Email"] = result;
+            }
+            else
+            {
+                ViewData["Email"] = String.Empty;
+            }
+        }
+
         [AllowAnonymous]
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult HandleAuthentication(string Email, string Password )
+        public IActionResult Index(string Email, string Password )
         {
+            AddEmailToCookies(Email);
+
             Utilisateur credential = new Utilisateur();
             credential.Email = Email;
             credential.Password = Password;
             Authenticate authenticate = new Authenticate(this._context);
 
             IActionResult response = Unauthorized();
-            Utilisateur user = authenticate.AuthenticateUser(credential);
+            Utilisateur user;
+
+            try
+            {
+                user = authenticate.AuthenticateUser(credential);
+            }
+            catch (NovarelSecurityException e)
+            {
+                GetEmailCookies();
+                ViewData["error"] = e.Message;
+                return View();
+            }
+            
 
             if (user != null)
             {
