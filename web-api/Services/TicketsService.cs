@@ -14,14 +14,18 @@ namespace web_api.Services
     {
         public TicketsService(NovarelContext context) : base(context) { }
 
-        public TicketObjetViewModel GetTicketWithDetails(string Reference)
+        public async Task<TicketObjetViewModel> GetTicketWithDetails(string Reference)
         {
-            var objets = _context.ObjetTickets.Where( ot => ot.Ticket.Reference == Reference).Select(s => s.Objet).ToList();
-            var ticket = _context.Tickets.Where(t => t.Reference == Reference)
+            var objets = await _context.ObjetTickets.Where( ot => ot.Ticket.Reference == Reference).Select(s => s.Objet).ToListAsync();
+            var ticket = await _context.Tickets.Where(t => t.Reference == Reference)
                                          .Include(t => t.Emplacement)
                                          .ThenInclude(e => e.Zone)
                                          .Include(t => t.ModeOuverture)
-                                         .FirstOrDefault();
+                                         .FirstOrDefaultAsync();
+            var actionService = new ActionTicketService(_context);
+            var actions = await actionService.GetActionsFromTicket(Reference);
+            ticket.Actions = actions;
+
             return new TicketObjetViewModel { Ticket = ticket, Objets = objets };
         }
 
@@ -60,7 +64,7 @@ namespace web_api.Services
             ticket.IsCloture = false;
             ticket.Reference = String.Format("TKT{0:yyyyMMddHHmmssfff}", ticket.DateOuverture);
 
-            var modeOuverture = await _context.ModeOuvertures.FindAsync(rawInput.openMode);
+            var modeOuverture = await _context.ModeOuvertures.FindAsync(int.Parse(rawInput.openMode));
             ticket.ModeOuverture = modeOuverture;
 
             ticket.ObjetTickets = new List<ObjetTicket>();

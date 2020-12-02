@@ -3,7 +3,6 @@ import {useParams} from 'react-router-dom'
 import TicketRx from "../../../reducer/Ticket";
 import {connect} from "react-redux";
 import ParseDate from '../../../components/ParseDate';
-import Duree from '../../../components/Duree';
 import Moment from 'react-moment';
 import 'moment/locale/fr';
 import ActionTicket from './component/NewActionTicket';
@@ -12,7 +11,7 @@ function TraiterTicket(props){
 
     let { Reference } = useParams();
     useEffect(() => {
-       props.getTicketDetails(Reference)
+        props.getTicketDetails(Reference)
     }, [])
 
     let {context:{Ticket, Objets, Client}} = props
@@ -92,8 +91,38 @@ function TraiterTicket(props){
                 <TicketClientInfos client={Client}/>
             </div> 
             
-
+            <ActionsListe actions={Ticket.Actions}/>
         </React.Fragment>
+    )
+}
+
+function ActionsListe(props){
+    let {actions} = props
+    return (
+        <div className="col-md-12">
+            {actions.map((item, k) => {
+                return <ActionCard data={item} key={k} />
+            })}
+        </div>
+    )
+}
+
+function ActionCard(props){
+    const { data } = props
+    return (
+        <div className="action-card">
+            <div className="action-initial">{data.Utilisateur.Name.substring(0,1)}</div>
+            <div className="action-content">
+                <div className="action-description">{data.Commentaire}</div>
+                <div className="action-meta">
+                    <icon className="material-icons">person</icon>
+                    <span className="action-author">{data.Utilisateur.Name}</span>
+                    <span className="action-date">
+                        <Moment parse="YYYY-MM-DDTHH:mm" fromNow>{data.DateAction}</Moment>
+                    </span>
+                </div>
+            </div>
+        </div>
     )
 }
 
@@ -128,7 +157,7 @@ function TicketClientInfos(props){
 
     return (
         <div className="card card-stats">
-             <div className="card-header">
+            <div className="card-header">
                 <h4 className="card-title">CLIENT</h4>
                 <hr />            
             </div>
@@ -161,7 +190,6 @@ function ActionTraitement(props){
             </div>
         </React.Fragment>
     )
-
 }
 
 const mapStateToProps = store =>  {

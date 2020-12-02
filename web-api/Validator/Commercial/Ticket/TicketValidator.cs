@@ -18,7 +18,7 @@ namespace web_api.Validator.Commercial.Ticket
         public string marque { get; set; }
         public string modele { get; set; }
         [Required (ErrorMessage = "Sélectionner un mode d'ouverture")]
-        public int openMode { get; set; }
+        public string openMode { get; set; }
         [Sens (ErrorMessage = "Le sens est compris entre 1 et 2")]
         public int sens { get; set; }
         [Required (ErrorMessage = "Veuillez sélectionner au moins un objet du ticket")]

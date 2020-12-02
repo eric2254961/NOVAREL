@@ -17,3 +17,52 @@ span.ticket-status.ticket-encours {
     top: -5px;
     margin: 0 3px;
 }
+.action-card {
+    padding: 5px 0;
+    display: flex;
+}
+.action-card::after{
+    clear: both;
+}
+
+.action-card .action-initial{
+    width: 50px;
+    background-color: #FEFEFE;
+    height: 50px;
+    border-radius: 2px;
+    border: 1px solid;
+    text-align: center;
+    position: relative;
+    padding-top: 12px;
+    font-size: 50px;
+    font-weight: bold;
+    margin-right: 2px;
+} 
+
+.action-card .action-content{
+    flex-grow: 1;
+    background-color: #fff;
+    border: 1px solid #e0e0e2;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+}
+.action-card .action-content .action-description{
+    min-height: 60px;
+    padding: 10px;
+}
+.action-card .action-content .action-meta{
+    background-color: #88888817;
+    padding: 10px;
+    font-size: small;
+    display: flex;
+    border-top: 1px solid #e0e0e2;
+    flex-direction: row;
+}
+
+.action-card .action-content .action-meta .action-author{
+    flex-grow: 1;
+}
+.action-card .action-content .action-meta .action-date {
+    flex-grow: 1;
+    text-align: end;
+}

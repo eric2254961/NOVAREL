@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,11 +22,26 @@ namespace web_api.Services
                 action.Commentaire = data.commentaire;
                 action.DateAction = DateTime.Now;
                 action.Ticket = ticket;
+                action.Utilisateur = _context.Utilisateurs.Find(data.UtilisateurId);
                 await _context.ActionTickets.AddAsync(action);
                 _context.SaveChanges();
                 return action;
             }
             return null;
+        }
+
+        public async Task<List<ActionTicket>> GetActionsFromTicket(string reference)
+        {
+            return await _context.ActionTickets.Where(a => a.Ticket.Reference == reference)
+                .OrderByDescending(a => a.DateAction)
+                .Select(a => new ActionTicket
+                {
+                    Commentaire = a.Commentaire,
+                    DateAction = a.DateAction,
+                    Id = a.Id,
+                    Utilisateur = a.Utilisateur
+                })
+                .ToListAsync();
         }
     }
 }

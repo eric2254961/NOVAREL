@@ -12,7 +12,7 @@ import TypeTicketComponent from "../../../../components/TypeTicket";
 
 function NewTicket(props){
 
-    const { handleSubmit, pristine, reset, submitting, data: { Localisations } } = props
+    const { handleSubmit, data: { Localisations } } = props
     
     return (
         <div className="card">

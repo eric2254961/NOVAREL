@@ -98,7 +98,7 @@ namespace web_api.Controllers.Commercial
         public async Task<ContentResult> GetTicketDetails(string Reference)
         {
             var service = new TicketsService(_context);
-            var ticketObjets  = service.GetTicketWithDetails(Reference);
+            var ticketObjets  = await service.GetTicketWithDetails(Reference);
 
             var clientService = new ClientGeaService();
             var subscriptions = await clientService.GetSubscriptionAndTagCustomerAsync(ticketObjets.Ticket.ClientId);

@@ -44,7 +44,9 @@ function ActionTicket (props){
         <DialogContent>
           <ActionForm
             initialValues={initialValue} 
-            onSubmit={props.addNewAction}/>
+            onSubmit={props.addNewAction}
+            onSubmitSuccess={() => {setOpen(false);}}
+            />
           </DialogContent>
       </Dialog>
     </React.Fragment>

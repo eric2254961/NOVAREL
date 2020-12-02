@@ -4,21 +4,24 @@ import DetailsMiniCLient from "../Clients/details.mini";
 import {Redirect, useParams} from "react-router-dom";
 import TicketRx from "../../../reducer/Ticket";
 import {connect} from "react-redux";
+import { SubmissionError } from "redux-form";
 
 function TicketNouveau(props){
 
   let { clientId } = useParams();
   let [urlSuccess, setUrlSuccess] = useState("")
+  let redirectUrl;
 
   useEffect(() => {
     props.getTicketData(clientId)
   }, [])
 
   let handleSubmit = (values) => {
-    let redirectUrl = props.addTicketNew(values);
-    redirectUrl.then((url) => {
-      setUrlSuccess(url);
-    });
+    return props.addTicketNew(values);
+  }
+
+  let onSuccess = (url) => {
+    setUrlSuccess(url);
   }
 
   let datetime = new Date();
@@ -27,14 +30,21 @@ function TicketNouveau(props){
   let heure = datetime.getHours() > 9 ? datetime.getHours() : "0"+datetime.getHours();
   let minute = datetime.getMinutes() > 9 ? datetime.getMinutes() : "0"+datetime.getMinutes();
 
-  let initialValues = {clientGeaId: clientId, datetime: jour+"/"+mois+"/"+datetime.getFullYear()+" "+heure+":"+minute}
+  let initialValues = {
+    clientGeaId: clientId, 
+    datetime: jour+"/"+mois+"/"+datetime.getFullYear()+" "+heure+":"+minute
+  }
 
   return (
     <React.Fragment>
     {urlSuccess === "" ? 
       <React.Fragment>
         <div className="col-md-8">
-          <NewTicket initialValues={initialValues} onSubmit={handleSubmit} data={props.context}/>
+          <NewTicket 
+            initialValues={initialValues} 
+            onSubmit={handleSubmit} 
+            onSubmitSuccess={onSuccess}
+            data={props.context}/>
         </div>
         <div className="col-md-4">
           <DetailsMiniCLient client={props.context.Client} />

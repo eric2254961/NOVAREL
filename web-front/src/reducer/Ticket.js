@@ -19,13 +19,11 @@ export function AddNewTicket(values){
                 }
             })
             return `/commercial/ticket/${response.data.Reference}/traiter`
-        })
-        .catch((error) => {
+        }).catch((error) => {
             var obj = {};
             for(var element in error.response.data.errors){
                 obj[element] = error.response.data.errors[element][0]
             }
-            console.log(obj)
             throw new SubmissionError(obj)
         })
     }
@@ -52,6 +50,10 @@ export function AddActionTicket(values){
             throw new SubmissionError(obj)
         })
     }
+}
+
+export function ListActionTicket(ticket){
+    
 }
 
 export function getDataForNew(idClient){
