@@ -36,7 +36,7 @@ namespace web_api.Migrations
                     b.Property<int>("TicketId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UtilisateurId")
+                    b.Property<int?>("UtilisateurId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -149,11 +149,16 @@ namespace web_api.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
+                    b.Property<int>("UtilisateurId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EmplacementId");
 
                     b.HasIndex("ModeOuvertureId");
+
+                    b.HasIndex("UtilisateurId");
 
                     b.ToTable("Tickets");
                 });
@@ -471,9 +476,7 @@ namespace web_api.Migrations
 
                     b.HasOne("web_api.Models.Dto.Organisation.Utilisateur", "Utilisateur")
                         .WithMany()
-                        .HasForeignKey("UtilisateurId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UtilisateurId");
                 });
 
             modelBuilder.Entity("web_api.Models.Dto.Commercial.ObjetTicket", b =>
@@ -502,6 +505,12 @@ namespace web_api.Migrations
                     b.HasOne("web_api.Models.Dto.Commercial.ModeOuverture", "ModeOuverture")
                         .WithMany()
                         .HasForeignKey("ModeOuvertureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("web_api.Models.Dto.Organisation.Utilisateur", "Utilisateur")
+                        .WithMany()
+                        .HasForeignKey("UtilisateurId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

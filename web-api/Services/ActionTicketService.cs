@@ -30,7 +30,7 @@ namespace web_api.Services
             return null;
         }
 
-        public async Task<List<ActionTicket>> GetActionsFromTicket(string reference)
+        public async Task<List<ActionTicket>> GetActionsFromTicketAsync(string reference)
         {
             return await _context.ActionTickets.Where(a => a.Ticket.Reference == reference)
                 .OrderByDescending(a => a.DateAction)

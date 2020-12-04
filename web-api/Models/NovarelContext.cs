@@ -41,6 +41,7 @@ namespace web_api.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            
 
             modelBuilder.Entity<ObjetTicket>()
                 .HasKey(ot => new { ot.ObjetId, ot.TicketId });
@@ -64,7 +65,6 @@ namespace web_api.Models
                 .HasMany(t => t.ObjetTickets)
                 .WithOne(ot => ot.Ticket)
                 .HasForeignKey(ot => ot.TicketId);
-
 
             modelBuilder.Entity<Objet>().HasData(
              new Objet { Id = 1, Libelle = "Problèmes liés à la classification", Module = TypeObjet.Commercial },

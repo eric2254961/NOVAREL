@@ -4,8 +4,8 @@ import { SubmissionError } from 'redux-form'
 
 const TICKET_NEW = "TICKET_NEW"
 const TICKET_DETAILS = "TICKET_DETAILS"
+const TICKET_ACTIONS = "TICKET_ACTIONS"
 const TICKET_LIST = "TICKET_LIST"
-const CLIENT_DETAILS = "CLIENT_DETAILS"
 
 export function AddNewTicket(values){
     return dispatch => {
@@ -52,8 +52,38 @@ export function AddActionTicket(values){
     }
 }
 
-export function ListActionTicket(ticket){
-    
+export function ListTickets(page){
+    return dispatch => {
+        axios.get(`/commercial/tickets/GetTicketListe`)
+            .then((response) => {
+                dispatch({
+                    type: TICKET_LIST,
+                    payload: response.data
+                })
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+                showNotification(NotificationType.ERROR, "Une erreur s'est produite. Impossible de charger les détails du client.")
+            })
+    }
+}
+
+export function ListActionTicket(ticketReference){
+    return dispatch => {
+        axios.get(`/commercial/tickets/GetTicketActionListe/${ticketReference}`)
+            .then((response) => {
+                dispatch({
+                    type: TICKET_ACTIONS,
+                    payload: response.data
+                })
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+                showNotification(NotificationType.ERROR, "Une erreur s'est produite. Impossible de charger les détails du client.")
+            })
+    }
 }
 
 export function getDataForNew(idClient){
@@ -89,9 +119,14 @@ export function getTicketDetails(reference){
     }
 }
 
-const initialState = { details: {Ticket: null}, context: {openMode : [], subject: []}, liste: [], localisation: {zones : [], emplacements: []} };
+const initialState = {liste: [], details: {Ticket: null}, context: {openMode : [], subject: []}, liste: [], localisation: {zones : [], emplacements: []} };
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case TICKET_LIST :
+            return {
+                ...state,
+                liste: action.payload
+            }
         case TICKET_NEW :
             return {
                 ...state,
@@ -101,6 +136,17 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 details: action.payload
+            }
+        case TICKET_ACTIONS : 
+            return {
+                ...state,
+                details:{
+                    ...state.details,
+                    Ticket: {
+                        ...state.details.Ticket,
+                        Actions: action.payload
+                    }
+                }
             }
         default :
             return {...state}
@@ -113,6 +159,8 @@ const TicketRx = {
     addNew : AddNewTicket,
     details : getTicketDetails,
     addAction : AddActionTicket,
+    getActions: ListActionTicket,
+    liste: ListTickets
 }
 
 export default TicketRx;

@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { connect } from "react-redux";
+import TicketRx from "../../../reducer/Ticket"
+import Moment from "react-moment";
+import 'moment/locale/fr';
 
 function TicketListe(props){
-    //requete http ASP.Net
+    
+    useEffect( () => {
+        props.getListe()
+    }, [])
+
     const { data } = props
     return (
         <React.Fragment>
@@ -20,32 +28,35 @@ function TicketListe(props){
                         <table className="table">
                             <thead className=" text-primary">
                                 <tr>
-                                    <th>Numéro</th>
-                                    <th>Type</th>
-                                    <th>Client</th>
-                                    <th>Date</th>
+                                    <th>Référence</th>
+                                    <th>ID client</th>
+                                    <th>Mode</th>
+                                    <th>Ouverture</th>
+                                    <th>Emplacement</th>
                                     <th>Statut</th>
+                                    <th>Ouvert par</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {data.map((item,k)=>{
                                     return(
-                                         <tr key={k}>
-                                           <td>{item.Reference}</td>
-                                           <td>{item.Type}</td>
-                                           <td>{item.Client.Name}</td>
-                                           <td>{item.Date}</td>
-                                           <td>{item.Status}</td>
-                                           <td>
+                                        <tr key={k}>
+                                            <td>{item.Reference}</td>
+                                            <td>{item.ClientId}</td>
+                                            <td>{item.ModeOuverture.Libelle}</td>
+                                            <td><Moment parse="YYYY-MM-DDTHH:mm" fromNow> {item.DateOuverture} </Moment></td>
+                                            <td>{item.Emplacement.Libelle} ({item.Emplacement.Zone.Libelle})</td>
+                                            <td>{item.Status ? 'Clôturé' : 'En cours'}</td>
+                                            <td>{item.Utilisateur.Name}</td>
+                                            <td>
                                                 <Link to= {`/commercial/ticket/${item.Reference}/traiter`} >
                                                     Traiter
                                                 </Link>
-                                           </td>
+                                            </td>
                                         </tr>
                                     )
-                                 })}
-
+                                })}
                             </tbody>
                         </table>
                     </div>
@@ -57,38 +68,27 @@ function TicketListe(props){
 }
 
 TicketListe.propTypes= {
-
-   data: PropTypes.arrayOf(PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
         Id: PropTypes.number,
         Reference: PropTypes.string,
         Type: PropTypes.string,
         Date: PropTypes.string,
         Status: PropTypes.string,
         Client: PropTypes.shape({
-            Id: PropTypes.string,
-          Name: PropTypes.string
-            })
-   }))
+        Id: PropTypes.string,
+        Name: PropTypes.string
+        })
+    }))
+}
 
+const getListe = TicketRx.liste;
+const mapDispatchToProps = {
+    getListe
 }
-TicketListe.defaultProps = {
-    data: [
-        {
-            Id: 1,
-            Reference: 'Azert225',
-            Type: 'Badge',
-            Date:'13-10-2020',
-            Status:'En cours',
-            Client: { Id: 2, Name:'Ketty Nguessan' },
-        },
-        {
-            Id: 2,
-            Reference: 'Vincent2',
-            Type: 'Test',
-            Date:'10-08-2020',
-            Status:'traité',
-            Client: { Id: 3, Name:'Vincent Manou' },
-        }
-    ]
+const mapStateToProps = store => {
+    return {
+        data: store.tickets.liste
+    }
 }
-export default TicketListe;
+
+export default connect(mapStateToProps,mapDispatchToProps) (TicketListe);

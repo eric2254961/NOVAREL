@@ -18,8 +18,9 @@ namespace web_api.Models.Dto.Commercial
         public string Commentaire { get; set; }
         [Required]
         public Ticket Ticket { get; set; }
-        [Required]
+        
         public Utilisateur Utilisateur { get; set; }
+        public int ? UtilisateurId { get; set; }
         public ICollection<PieceJointe> PieceJointes { get; set; }
 
     }

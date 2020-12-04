@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using web_api.Models.Dto.Organisation;
 using web_api.Models.Dto.Pont;
 using web_api.Models.Dto.Shared;
 
@@ -35,6 +36,8 @@ namespace web_api.Models.Dto.Commercial
         public string Immatriculation { get; set; }
         public string Marque { get; set; }
         public string Modele { get; set; }
+        [Required]
+        public Utilisateur Utilisateur { get; set; }
         public ICollection<PieceJointe> PieceJointes { get; set; }
       
         public virtual ICollection<ObjetTicket> ObjetTickets { get; set; }

@@ -14,7 +14,7 @@ function CustomerSubscription(props){
         <div className="col-md-2 text-right">
           <span>Abonnement</span>
         </div>
-        <div className="col-md-8">
+        <div className="col-md-4">
           <TextField
             onChange={(event) => {setAbonnementActif(event.target.value)} }
             select
@@ -24,6 +24,8 @@ function CustomerSubscription(props){
             {abonnements.map((item,k) => { return <MenuItem key={k} value={k}>{item.SUBS_ID}</MenuItem> })}
           </TextField>
         </div>
+        <div className="col-md-1">Solde :</div>
+        <div className="col-md-3"><b>{abonnements[abonnementActif].SOLDE}</b> Fcfa</div>
         <div className="col-md-2">
           {abonnements.length > 0  &&
           <HistoriqueDialog 

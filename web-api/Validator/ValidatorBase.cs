@@ -11,7 +11,7 @@ namespace web_api.Validator
     //https://alexdunn.org/2018/05/22/add-model-validation-to-your-asp-net-core-web-api/
     public class ValidatorBase
     {
-        [Required(ErrorMessage = "Le code utiulisateur est requis")]
+        [Required(ErrorMessage = "Le code utilisateur est requis")]
         public int UtilisateurId { get; set; }
     }
 }

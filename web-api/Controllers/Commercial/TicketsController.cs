@@ -77,20 +77,24 @@ namespace web_api.Controllers.Commercial
         [Authorize(Policy = Service.COMMERCIAL)]
         public async Task<ContentResult> AddNewTicket([FromBody] TicketValidator input)
         {
-            Object context = new { Type = 1, Message = "" , Reference = ""};
+            var viewModel = new TicketAddViewModel();
 
             if (ModelState.IsValid)
             {
                 var service = new TicketsService(_context);
                 var ticket = await service.AddNewticket(input);
-                context = new { Type = Notification.Success, Message = string.Format("Ticket {0} créé avec succès.", ticket.Reference), Reference = ticket.Reference };
+                viewModel.Type = (int) Notification.Success;
+                viewModel.Message = string.Format("Ticket {0} créé avec succès.", ticket.Reference);
+                viewModel.Reference = ticket.Reference;
             }
             else
             {
-                context = new { Type = Notification.Error, Message = "Erreur de validation", Reference= "" };
+                viewModel.Type = (int)Notification.Error;
+                viewModel.Message = "Erreur de validation";
+                viewModel.Reference = string.Empty;
             }
 
-            return Content(JsonConvert.SerializeObject(context), MediaTypeHeaderValue.Parse("application/json"));
+            return Content(JsonConvert.SerializeObject(viewModel), MediaTypeHeaderValue.Parse("application/json"));
         }
 
         [HttpGet("{Reference}")]
@@ -107,6 +111,23 @@ namespace web_api.Controllers.Commercial
 
             var context = new TicketTraitementViewModel { Ticket = ticketObjets.Ticket, Objets = ticketObjets.Objets, Client = customer.PAYLOAD };
 
+            return Content(JsonConvert.SerializeObject(context), MediaTypeHeaderValue.Parse("application/json"));
+        }
+
+        [HttpGet("{Reference}")]
+        [Authorize(Policy = Service.COMMERCIAL)]
+        public async Task<ContentResult> GetTicketActionListe(string Reference)
+        {
+            var service = new ActionTicketService(this._context);
+            var context = await service.GetActionsFromTicketAsync(Reference);
+            return Content(JsonConvert.SerializeObject(context), MediaTypeHeaderValue.Parse("application/json"));
+        }
+
+        [Authorize(Policy = Service.COMMERCIAL)]
+        public async Task<ContentResult> GetTicketListe(string page)
+        {
+            var service = new TicketsService(this._context);
+            var context = await service.ListTicketsAsync();
             return Content(JsonConvert.SerializeObject(context), MediaTypeHeaderValue.Parse("application/json"));
         }
     }

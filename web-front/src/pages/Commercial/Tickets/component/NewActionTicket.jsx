@@ -19,6 +19,11 @@ function ActionTicket (props){
     setOpen(false);
   };
 
+  const submitCallback = () => {
+    setOpen(false);
+    props.getActionList(reference);
+  }
+  
   const initialValue = {reference: reference}
   return (
     <React.Fragment>
@@ -45,7 +50,7 @@ function ActionTicket (props){
           <ActionForm
             initialValues={initialValue} 
             onSubmit={props.addNewAction}
-            onSubmitSuccess={() => {setOpen(false);}}
+            onSubmitSuccess={submitCallback}
             />
           </DialogContent>
       </Dialog>
@@ -84,8 +89,9 @@ ActionForm = reduxForm({
 })(ActionForm)
 
 const addNewAction = TicketRx.addAction
+const getActionList = TicketRx.getActions
 const mapDispatchToProps = {
-  addNewAction
+  addNewAction, getActionList
 }
 
 export default connect(undefined, mapDispatchToProps) (ActionTicket)

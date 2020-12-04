@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using web_api.Models;
 using web_api.Models.Dto.Commercial;
+using web_api.Models.Dto.Organisation;
 using web_api.Models.ViewModel;
 using web_api.Validator.Commercial.Ticket;
 
@@ -23,7 +24,7 @@ namespace web_api.Services
                                          .Include(t => t.ModeOuverture)
                                          .FirstOrDefaultAsync();
             var actionService = new ActionTicketService(_context);
-            var actions = await actionService.GetActionsFromTicket(Reference);
+            var actions = await actionService.GetActionsFromTicketAsync(Reference);
             ticket.Actions = actions;
 
             return new TicketObjetViewModel { Ticket = ticket, Objets = objets };
@@ -43,6 +44,24 @@ namespace web_api.Services
                                         Objet = ob.Objet
                                     })
                                     .ToList()
+                }).ToListAsync();
+        }
+
+        public async Task<List<Ticket>> ListTicketsAsync(int page = 1)
+        {
+            return await _context.Tickets.OrderByDescending(t => t.DateOuverture)
+                .Include( t => t.Emplacement)
+                .ThenInclude(e => e.Zone)
+                .Select(t => new Ticket
+                {
+                    Reference = t.Reference,
+                    IsCloture = t.IsCloture,
+                    DateOuverture = t.DateOuverture,
+                    ModeOuverture = t.ModeOuverture,
+                    DateCloture = t.DateCloture,
+                    ClientId = t.ClientId,
+                    Emplacement = t.Emplacement,
+                    Utilisateur = new Utilisateur() { Email = t.Utilisateur.Email, Name = t.Utilisateur.Name, Id = t.Utilisateur.Id },
                 }).ToListAsync();
         }
 
@@ -68,11 +87,13 @@ namespace web_api.Services
             ticket.ModeOuverture = modeOuverture;
 
             ticket.ObjetTickets = new List<ObjetTicket>();
-
             foreach (int ObjetId in rawInput.subjects)
             {
                 ticket.ObjetTickets.Add(new ObjetTicket() { ObjetId = ObjetId });
             }
+
+            var utilisateur = await _context.Utilisateurs.FindAsync(rawInput.UtilisateurId);
+            ticket.Utilisateur = utilisateur;
 
             await _context.Tickets.AddAsync(ticket);
             await _context.SaveChangesAsync();

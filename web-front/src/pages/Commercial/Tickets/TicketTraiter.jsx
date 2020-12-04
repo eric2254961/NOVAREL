@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {useParams} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 import TicketRx from "../../../reducer/Ticket";
 import {connect} from "react-redux";
 import ParseDate from '../../../components/ParseDate';
@@ -19,62 +19,75 @@ function TraiterTicket(props){
     return(
         Ticket !== null &&
         <React.Fragment>
-            <div className="col-md-9">                 
+            <div className="col-md-12">                 
                 <div className="card card-stats">
                     <div className="card-header">
                         <h4 className="card-title">Ticket: <b>{Reference}</b></h4>
                         <hr />            
                     </div>
                     <div className="card-body">
-                        
                         <div className="row">
-                            <div className="col-md-2 text-right">
-                                <span>Ouverture :</span>
+                            <div className="col-md-9">
+                                <div className="row">
+                                    <div className="col-md-2 text-right">
+                                        <span>Client : </span>
+                                    </div>
+                                    <div className="col-md-10">
+                                        <span className="client-infos">
+                                            <Link to={`/commercial/client/${Client.IDENTITY}/details`}> <b>{Client.NAME} {Client.FNAME} {Client.CNAME}</b> </Link>
+                                        </span>
+                                    </div>
+                                    <div className="col-md-2 text-right">
+                                        <span>Ouverture :</span>
+                                    </div>
+                                    <div className="col-md-10">
+                                        <span className="client-infos">{Ticket.ModeOuverture.Libelle}</span>
+                                    </div>
+                                    <div className="col-md-2 text-right">
+                                        <span>Localisation :</span>
+                                    </div>
+                                    <div className="col-md-10">
+                                        <span className="client-infos">{Ticket.Emplacement.Zone.Libelle} - {Ticket.Emplacement.Libelle}</span>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-2 text-right">
+                                        <span>Objets :</span>
+                                    </div>
+                                    <div className="col-md-10">
+                                        <span className="client-infos">
+                                            {Objets.map((item, k)=>{
+                                                return( <span key={k}> {item.Libelle} - </span> )
+                                            })} 
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-2 text-right">
+                                        <span>Vehicule :</span>
+                                    </div>
+                                    <div className="col-md-10">
+                                        <span className="client-infos">{Ticket.Marque} {Ticket.Modele} {Ticket.Immatriculation}</span>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                <div className="col-md-2 text-right">
+                                    <span>Date des faits :</span>
+                                </div>
+                                <div className="col-md-10">
+                                    <span className="client-infos"><ParseDate value={props.context.Ticket.DateFait} /></span>
+                                </div>
                             </div>
-                            <div className="col-md-10">
-                                <span className="client-infos">{Ticket.ModeOuverture.Libelle}</span>
                             </div>
-                            <div className="col-md-2 text-right">
-                                <span>Localisation :</span>
-                            </div>
-                            <div className="col-md-10">
-                                <span className="client-infos">{Ticket.Emplacement.Zone.Libelle} - {Ticket.Emplacement.Libelle}</span>
+                            <div className="col-md-3">
+                                <TicketInfos ticket={Ticket}/>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-md-2 text-right">
-                                <span>Objets :</span>
-                            </div>
-                            <div className="col-md-10">
-                                <span className="client-infos">
-                                    {Objets.map((item, k)=>{
-                                        return( <span key={k}> {item.Libelle} - </span> )
-                                    })} 
-                                </span>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-2 text-right">
-                                <span>Vehicule :</span>
-                            </div>
-                            <div className="col-md-10">
-                                <span className="client-infos">{Ticket.Marque} {Ticket.Modele} {Ticket.Immatriculation}</span>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-2 text-right">
-                                <span>Date des faits :</span>
-                            </div>
-                            <div className="col-md-10">
-                                <span className="client-infos"><ParseDate value={props.context.Ticket.DateFait} /></span>
-                            </div>
-                        </div>
+                        <br/>
+                        <h4>Description</h4>
                         <hr/>
                         <div className="row">
-                            <div className="col-md-2 text-right">
-                                <span>Description :</span>
-                            </div>
-                            <div className="col-md-10">
+                            <div className="col-md-12">
                                 <span className="client-infos">{Ticket.Description}</span>
                             </div>
                         </div> 
@@ -85,11 +98,6 @@ function TraiterTicket(props){
                     </div>
                 </div>
             </div>
-
-            <div className="col-md-3">
-                <TicketInfos ticket={Ticket}/>
-                <TicketClientInfos client={Client}/>
-            </div> 
             
             <ActionsListe actions={Ticket.Actions}/>
         </React.Fragment>
@@ -111,7 +119,6 @@ function ActionCard(props){
     const { data } = props
     return (
         <div className="action-card">
-            <div className="action-initial">{data.Utilisateur.Name.substring(0,1)}</div>
             <div className="action-content">
                 <div className="action-description">{data.Commentaire}</div>
                 <div className="action-meta">
@@ -130,43 +137,23 @@ function TicketInfos(props){
     let { ticket } = props
 
     return (
-        <div className="card card-stats">
-            <div className="card-body">
-                <div className="meta">
-                    <div>
-                        <span className="material-icons">calendar_today</span>
-                        <span className="text-icon"><ParseDate value={ticket.DateOuverture} /></span> 
-                    </div>
-                    <div>
-                        <span className="material-icons">perm_identity</span>
-                        <span className="text-icon">User Text</span>
-                    </div>   
-                    <div>
-                        <span className="text-icon">Statut</span>
-                        <span className={`ticket-status ${ticket.IsCloture? 'ticket-cloture':'ticket-encours' }`}> </span>
-                    </div>
+        <React.Fragment>
+            <div className="meta">
+                <div>
+                    <span className="material-icons">calendar_today</span>
+                    <span className="text-icon"><ParseDate value={ticket.DateOuverture} /></span> 
                 </div>
-                <Moment parse="YYYY-MM-DDTHH:mm" fromNow> {ticket.DateOuverture} </Moment>
-            </div>
-        </div>
-    )
-}
-
-function TicketClientInfos(props){
-    let {client} = props
-
-    return (
-        <div className="card card-stats">
-            <div className="card-header">
-                <h4 className="card-title">CLIENT</h4>
-                <hr />            
-            </div>
-            <div className="card-body">
-                <div className="col-md-10">
-                    <span className="client-infos">{client.NAME} {client.FNAME} {client.CNAME}</span>
+                <div>
+                    <span className="material-icons">perm_identity</span>
+                    <span className="text-icon">{ticket.Utilisateur.Name}</span>
+                </div>   
+                <div>
+                    <span className="text-icon">Statut</span>
+                    <span className={`ticket-status ${ticket.IsCloture? 'ticket-cloture':'ticket-encours' }`}> </span>
                 </div>
             </div>
-        </div>
+            <Moment parse="YYYY-MM-DDTHH:mm" fromNow>${ticket.IsCloture? 'Ouvert' : 'Clôturé'} depuis {ticket.DateOuverture} </Moment>
+        </React.Fragment>
     )
 }
 

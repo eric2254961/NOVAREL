@@ -16,6 +16,13 @@ namespace web_api.Models.ViewModel
         public Customer Client {get; set;}
     }
 
+    public class TicketAddViewModel
+    {
+        public int Type {get;set; }
+        public string Message { get; set; } 
+        public string Reference { get; set; }
+    }
+
     public class TicketObjetViewModel
     {
         public Ticket Ticket { get; set; }
