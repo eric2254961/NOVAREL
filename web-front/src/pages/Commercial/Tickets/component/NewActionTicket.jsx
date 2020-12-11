@@ -6,6 +6,7 @@ import MultilineField from '../../../../components/form/Multiline';
 import { Field, reduxForm } from 'redux-form';
 import TicketRx from '../../../../reducer/Ticket';
 import { connect } from 'react-redux';
+import UploadField from '../../../../components/form/Upload';
 
 function ActionTicket (props){
   const {reference} = props
@@ -70,6 +71,7 @@ function ActionForm (props){
           <Field component={MultilineField} name="commentaire" placeholder="Saisir un commentaire sur l'action SVP" />
         </div>
       </div>
+      <Field name="files" component={UploadField} type="file" normalize={ value => console.log(value)}/>
       <Button
         variant="contained"
         color="primary"

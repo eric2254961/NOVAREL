@@ -6,6 +6,7 @@ import ParseDate from '../../../components/ParseDate';
 import Moment from 'react-moment';
 import 'moment/locale/fr';
 import ActionTicket from './component/NewActionTicket';
+import { Icon } from '@material-ui/core';
 
 function TraiterTicket(props){
 
@@ -122,7 +123,7 @@ function ActionCard(props){
             <div className="action-content">
                 <div className="action-description">{data.Commentaire}</div>
                 <div className="action-meta">
-                    <icon className="material-icons">person</icon>
+                    <Icon className="material-icons">person</Icon>
                     <span className="action-author">{data.Utilisateur.Name}</span>
                     <span className="action-date">
                         <Moment parse="YYYY-MM-DDTHH:mm" fromNow>{data.DateAction}</Moment>
