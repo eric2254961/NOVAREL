@@ -6,13 +6,13 @@ const token = localStorage.getItem("NVL_TK");
 axios.interceptors.request.use(
   config => {
     console.log("sarting web request")
+    document.querySelector('.MuiLinearProgress-root').style.display = "block"
 
     console.log("Configuration Axios",config)
     
     if(config.method === "post"){      
       let userRaw = localStorage.getItem("user")
       let user = JSON.parse(userRaw);
-      //data: "{"clientGeaId":"000000036505","datetime":"30/11/2020 22:59"}"
       config.data = {...config.data, UtilisateurId: user.Id}
     }
 
@@ -32,10 +32,12 @@ axios.interceptors.request.use(
 //Add a response interceptor
 axios.interceptors.response.use(
   (response) => {
+    document.querySelector('.MuiLinearProgress-root').style.display = "none"
     console.log("request success   response")
     return response
   },
   (error) => {
+    document.querySelector('.MuiLinearProgress-root').style.display = "none"
     console.log("request error response")
 
     const originalRequest = error.config;

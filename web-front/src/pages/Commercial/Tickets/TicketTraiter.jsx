@@ -12,7 +12,7 @@ function TraiterTicket(props){
 
     let { Reference } = useParams();
     useEffect(() => {
-        props.getTicketDetails(Reference)
+        let test = props.getTicketDetails(Reference)
     }, [])
 
     let {context:{Ticket, Objets, Client}} = props

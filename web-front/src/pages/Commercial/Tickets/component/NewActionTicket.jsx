@@ -33,9 +33,7 @@ function ActionTicket (props){
         color="primary"
         endIcon={<Icon>chat</Icon>}
         onClick={handleClickOpen}
-      >
-        Traiter
-      </Button>
+      > Traiter </Button>
 
       <Dialog
         open={open}

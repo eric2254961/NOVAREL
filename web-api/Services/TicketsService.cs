@@ -22,6 +22,7 @@ namespace web_api.Services
                                          .Include(t => t.Emplacement)
                                          .ThenInclude(e => e.Zone)
                                          .Include(t => t.ModeOuverture)
+                                         .Include(t => t.Utilisateur)
                                          .FirstOrDefaultAsync();
             var actionService = new ActionTicketService(_context);
             var actions = await actionService.GetActionsFromTicketAsync(Reference);
@@ -52,6 +53,7 @@ namespace web_api.Services
             return await _context.Tickets.OrderByDescending(t => t.DateOuverture)
                 .Include( t => t.Emplacement)
                 .ThenInclude(e => e.Zone)
+                .Include(t => t.Utilisateur)
                 .Select(t => new Ticket
                 {
                     Reference = t.Reference,
